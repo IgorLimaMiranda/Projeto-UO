@@ -1,0 +1,235 @@
+﻿@model Web.ViewModel.CadastroSalaVM
+@{
+
+}
+<section class="content">
+    <div class="row" id="weather-temp">
+        <input id="id-equipamento" hidden />
+        <div class="col-xs-12 ">
+            <div class="col-lg-6 labelulisses">
+                <label>Recurso</label>
+                @Html.DropDownListFor(model => model.Equipamento.Id, Model.ListarEquipamentos(), "...", htmlAttributes: new { @id = "combo_box_recurso_sala", @class = "form-control", @Onchange = "VerificaEquipamento()" })
+            </div>
+            <div class="col-lg-6 labelulisses">
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <div id="nome_descricao" class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                        @Html.EditorFor(model => model.EquipamentoSetor.Quantidade, new { htmlAttributes = new { @id = "numero_recurso", @type = "number", @class = "form-control", @placeholder = "...", @Required = "required", @min = "1" } })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="btn-adicionar" class="btn btn-social-icon btn-warning btnrecursosala" onclick="AdicionarRecurso()"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+
+
+
+        <table class="table table-bordered table-striped" id="tab_recurso_sala">
+            <thead>
+                <tr>
+                    <th>Recurso</th>
+                    <th>Quantidade</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+                @foreach(var equipamento in Model.EquipamentosSetor) {
+                    <tr>
+                        <td hidden>@Html.DisplayFor(model => equipamento.Equipamento.Id)</td>
+                        <td>@Html.DisplayFor(model => equipamento.Equipamento.Descricao)</td>
+                        <td>@Html.DisplayFor(model => equipamento.Quantidade)</td>
+                        <td>
+                            <button type="button" class="btn btn-social-icon btn-primary" id="editar" onclick="Editar(this)"><i class="fa fa-edit"></i></button>
+                            <button type="button" class="btn btn-social-icon btn-warning" id="remover" onclick="Remover(this)"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="box-footer">
+        <div class="text-center">
+            <button type="submit" class="btn bg-orange btn margin" onclick="Salvar()"><i class="fa fa-check"></i> Salvar</button>
+            <button type="submit" class="btn bg-navy btn margin" onclick="CancelarWindowsForms()"><i class="fa fa-close"></i> Cancelar</button>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+        var equipamentos = new Array();
+        var estaEditando = false;
+        var itemEditando = null;
+
+
+
+    function AdicionarRecurso() {
+        if ($("#numero_recurso").val() > 0 && $("#combo_box_recurso_sala option").text() !== "") {
+            if (!estaEditando) {
+                AtribuirEquipamentoTabela();
+            }
+            else {
+                var tr = $(itemEditando).closest('tr');
+                tr.remove();
+                console.log(tr);
+                AtribuirEquipamentoTabela();
+                $("#combo_box_recurso_sala").val("...");
+                $("#numero_recurso").val(0);
+                $("#btn-adicionar").prop("disabled", false);
+                $('#combo_box_recurso_sala').prop("disabled", false);
+                $("#btn-adicionar").prop("class", "btn btn-social-icon btn-warning btnrecursosala");
+                $("#btn-adicionar").find('i').prop("class", "fa fa-plus");
+                $('#editar').prop("disabled", false);
+                estaEditando = false;
+            }
+        }
+        else {
+            alert("Quantidade deve ser maior que 0 (zero) e deve selecionar algum equipamento.");
+        }
+    }
+
+    function Salvar() {
+
+        var table = $('#tab_recurso_sala');
+          table.find('tbody > tr').each(function () {
+              var objectJson = { IdSetor: @Model.Sala.Id, IdEquipamento: $(this).find('td').eq(0).text(), Quantidade: $(this).find('td').eq(2).text() };
+              equipamentos.push(objectJson);
+        });
+
+          if (equipamentos.length > 0) {
+              var jasonString = JSON.stringify({ 'equipamentosSetor': equipamentos });
+              $.ajax({
+                  url: "/CadastroSala/CadastrarEquipamentosSetorAsync",
+                  type: "POST",
+                  contentType: 'application/json; charset=utf-8',
+                  dataType: "json",
+                  data: jasonString,
+                  success: function (response) {
+                      toastr.success('Lista de recursos atualizada com sucesso', 'Parabéns', {
+                            "progressBar": true,
+                            "closeButton": true,
+                            "showMethod": "slideDown",
+                            "hideMethod": "slideUp",
+                            "timeOut": 5000
+                        });
+
+                  },
+                  error: function (response) {
+                      toastr.success('Lista de recursos não foi atualizada.', 'Desculpe', {
+                          "progressBar": true,
+                          "closeButton": true,
+                          "showMethod": "slideDown",
+                          "hideMethod": "slideUp",
+                          "timeOut": 5000
+                      });
+                  }
+
+              });
+
+          }
+          else {
+              $.ajax({
+                  url: "/CadastroSala/ExcluirEquipamentosSetor",
+                  type: "POST",
+                  dataType: "json",
+                  data: { IdSetor: @Model.Sala.Id, },
+                  success: function (response) {
+                      toastr.success('Lista de recursos atualizada com sucesso', 'Parabéns', {
+                          "progressBar": true,
+                          "closeButton": true,
+                          "showMethod": "slideDown",
+                          "hideMethod": "slideUp",
+                          "timeOut": 5000
+                      });
+
+                  },
+                  error: function (response) {
+                      toastr.success('Lista de recursos não foi atualizada.', 'Desculpe', {
+                          "progressBar": true,
+                          "closeButton": true,
+                          "showMethod": "slideDown",
+                          "hideMethod": "slideUp",
+                          "timeOut": 5000
+                      });
+                  }
+              });
+        }
+    }
+
+    function Editar(item) {
+
+            index = $("#tab_recurso_sala").index($(item));
+            itemEditando = item;
+            var tr = $(item).closest('tr');
+            var idEquipamento = 0;
+            idEquipamento = tr.find('td').eq(0).text();
+            var DescricaoEquipamento = 0;
+            DescricaoEquipamento = tr.find('td').eq(1).text();
+            var QuantidadeEquipamento = 0;
+            QuantidadeEquipamento = tr.find('td').eq(2).text();
+
+            console.log(idEquipamento + " " + DescricaoEquipamento + " " + QuantidadeEquipamento);
+            $("#id-equipamento").val(idEquipamento);
+            $("#combo_box_recurso_sala option[value=" + idEquipamento + "]").prop("selected", true);
+            $("#numero_recurso").val(QuantidadeEquipamento);
+            $("#btn-adicionar").prop("class", "btn btn-social-icon btn-success btnrecursosala");
+            $("#btn-adicionar").find('i').prop("class", "fa fa-check");
+            $("#combo_box_recurso_sala").prop("disabled", true);
+            $("#btn-adicionar").prop("disabled", false);
+            estaEditando = true;
+            $('#editar').prop("disabled", true);
+
+
+
+    }
+
+    function Remover(item){
+        var tr = $(item).closest('tr');
+        tr.fadeOut(400, function () { tr.remove(); });
+        $("#combo_box_recurso_sala").val("...");
+        $("#numero_recurso").val(0);
+        $("#btn-adicionar").prop("disabled", false);
+        $('#combo_box_recurso_sala').prop("disabled", false);
+        $("#btn-adicionar").prop("class", "btn btn-social-icon btn-warning btnrecursosala");
+        $("#btn-adicionar").find('i').prop("class", "fa fa-plus");
+        estaEditando = false;
+    }
+
+    function VerificaEquipamento() {
+
+            var recursoExiste = false;
+            var table = $('#tab_recurso_sala');
+            table.find('tbody > tr').each(function () {
+                console.log($(this).find('td').eq(0).text() + " " + $("#combo_box_recurso_sala").val());
+                if ($(this).find('td').eq(0).text() == $("#combo_box_recurso_sala").val()) {
+                    recursoExiste = true;
+                }
+            });
+            if (recursoExiste) {
+                $("#btn-adicionar").prop("disabled", true);
+            } else {
+                $("#btn-adicionar").prop("disabled", false);
+            }
+    }
+
+    function AtribuirEquipamentoTabela() {
+        var itemSelecionado = $("#combo_box_recurso_sala option:selected").text();
+        var valorNumero = $("#numero_recurso").val();
+        var idItemSelecionado = $("#combo_box_recurso_sala").val();
+        document.getElementById("table-body").innerHTML
+            += "<tr><td hidden>" + idItemSelecionado + "</td>  <td>" + itemSelecionado + "</td>  <td>" + valorNumero +
+            "</td>  <td><button type='button' class='btn btn-social-icon btn-primary' onclick='Editar(this)'> <i class='fa fa-edit'></i></button >" +
+            " <button type= 'button' class='btn btn-social-icon btn-warning' onclick= 'Remover(this)' > <i class='fa fa-trash'></i></button>" +
+            "</td > </tr > ";
+
+        $("#btn-adicionar").prop("disabled", true);
+    }
+
+    $("tr").on('click', function () {
+        $(this).siblings().removeClass('active');
+        $(this).toggleClass('active');
+    });
+</script>

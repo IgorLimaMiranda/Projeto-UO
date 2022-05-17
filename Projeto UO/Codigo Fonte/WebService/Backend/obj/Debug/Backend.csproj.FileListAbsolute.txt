@@ -1,0 +1,12 @@
+C:\Projeto UO\Codigo Fonte\WebService\Backend\bin\Debug\Backend.dll.config
+C:\Projeto UO\Codigo Fonte\WebService\Backend\bin\Debug\Backend.dll
+C:\Projeto UO\Codigo Fonte\WebService\Backend\bin\Debug\Backend.pdb
+C:\Projeto UO\Codigo Fonte\WebService\Backend\bin\Debug\EntityFramework.dll
+C:\Projeto UO\Codigo Fonte\WebService\Backend\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projeto UO\Codigo Fonte\WebService\Backend\bin\Debug\Newtonsoft.Json.dll
+C:\Projeto UO\Codigo Fonte\WebService\Backend\bin\Debug\EntityFramework.xml
+C:\Projeto UO\Codigo Fonte\WebService\Backend\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projeto UO\Codigo Fonte\WebService\Backend\bin\Debug\Newtonsoft.Json.xml
+C:\Projeto UO\Codigo Fonte\WebService\Backend\obj\Debug\Backend.dll
+C:\Projeto UO\Codigo Fonte\WebService\Backend\obj\Debug\Backend.pdb
+C:\Projeto UO\Codigo Fonte\WebService\Backend\obj\Debug\Backend.csprojResolveAssemblyReference.cache

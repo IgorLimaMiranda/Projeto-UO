@@ -1,0 +1,144 @@
+﻿@model Web.ViewModel.EnsalamentoVM
+
+<iframe onload="DatePicker()" hidden></iframe>
+<div class="box box-default">
+    @using (Html.BeginForm("CadastrarEnsalamento", "CadastroEnsalamento", FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+        <div class="box-header">
+            <h3 class="box-title">Cadastrar</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label>Intervalo</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.EditorFor(model => model.IntervaloEnsalamento, new {
+                                        htmlAttributes = new {
+                                            @id = "data_cadastrar_ensalamento",
+                                            @class = "form-control pull-right",
+                                            @Required = "required"
+                                        }
+                                    })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Turno</label>
+                            <div id="turno" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                @Html.DropDownListFor(lista => lista.Ensalamento.Periodo, Model.ListarTurnos(),
+                                             "...", htmlAttributes: new {
+                                                 @id = "IdListaTurnos",
+                                                 @class = "form-control",
+                                                 required = (string)null
+
+                                             })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Periodicidade</label>
+                            <div id="question2" class="multiChoice">
+                                <span class="custom-checkbox-1">
+                                    @Html.CheckBoxFor(model => Model.Periodicidade[0],htmlAttributes: new { @id = "multiChoice1" })
+                                    <span class="box">Dom</span>
+                                </span>
+
+                                <span class="custom-checkbox-1" id="q2Blue">
+                                    @Html.CheckBoxFor(model => Model.Periodicidade[1],htmlAttributes: new { @id = "multiChoice2" })
+                                    <span class="box">Seg</span>
+                                </span>
+
+                                <span class="custom-checkbox-1" id="q2Red">
+                                    @Html.CheckBoxFor(model => Model.Periodicidade[2],htmlAttributes: new { @id = "multiChoice3" })
+                                    <span class="box">Ter</span>
+                                </span>
+
+                                <span class="custom-checkbox-1" id="multiChoice">
+                                    @Html.CheckBoxFor(model => Model.Periodicidade[3],htmlAttributes: new { @id = "multiChoice4" })
+                                    <span class="box">Qua</span>
+                                </span>
+                                <span class="custom-checkbox-1" id="multiChoice">
+                                    @Html.CheckBoxFor(model => Model.Periodicidade[4],htmlAttributes: new { @id = "multiChoice5" })
+                                    <span class="box">Qui</span>
+                                </span>
+                                <span class="custom-checkbox-1" id="multiChoice">
+                                    @Html.CheckBoxFor(model => Model.Periodicidade[5],htmlAttributes: new { @id = "multiChoice6" })
+                                    <span class="box">Sex</span>
+                                </span>
+                                <span class="custom-checkbox-1" id="multiChoice">
+                                    @Html.CheckBoxFor(model => Model.Periodicidade[6],htmlAttributes: new { @id = "multiChoice7" })
+                                    <span class="box">Sáb</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label>Turma</label>
+                            <div id="turma" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-group"></i></span>
+                                @Html.DropDownListFor(lista => lista.ChaveTurma, Model.ListarTurmas(),
+                             "...", htmlAttributes: new {
+                                 @id = "IdListaTurmas",
+                                 @class = "form-control",
+                                 required = (string)null
+
+                             })
+
+                                @Html.ValidationMessageFor(lista => lista.ChaveTurma, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sala</label>
+                            <div id="sala" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                @Html.DropDownListFor(lista => lista.Ensalamento.IdSala, Model.ListarSalas(),
+                             "...", htmlAttributes: new {
+                                 @id = "IdListaSalas",
+                                 @class = "form-control",
+                                 required = (string)null
+
+                             })
+
+                                @Html.ValidationMessageFor(lista => lista.Ensalamento.IdSala, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Ocupante</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                @Html.EditorFor(model => model.Ensalamento.Ocupante, new {
+                               htmlAttributes = new {
+                                   @id = "ocupante",
+                                   @class = "form-control",
+                                   @Placeholder = "Digite um Ocupante",
+                                   @maxlength = "100"
+                               }
+                           })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="button" class="btn bg-navy btn margin pull-right" onclick="LimparPartialView()"><i class="fa fa-close"></i> Cancelar</button>
+            <button type="submit" class="btn bg-orange btn margin pull-right" onclick="funcaoVerificar()"><i class="fa fa-check"></i> Salvar</button>
+        </div>
+    }
+</div>

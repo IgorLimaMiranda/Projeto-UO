@@ -1,0 +1,54 @@
+﻿@model Web.ViewModel.CadastroCursoVM
+<section class="content">
+    <div class="row">
+        <div class="box box-default">
+            <div class="box-header">
+                <h3 class="box-title">Editar</h3>
+            </div>
+                @using (Html.BeginForm("Editar", "CadastroCurso", FormMethod.Post)) {
+                    @Html.AntiForgeryToken()
+                    <div class="box-body">
+                        @Html.HiddenFor(model => model.Curso.Id)
+                        <div class="form-group">
+                            <label>Nome do Curso</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                                @Html.EditorFor(model => model.Curso.Descricao, new {
+                                    htmlAttributes = new {
+                                        @id = "curso_nome",
+                                        @type = "text",
+                                        @class = "form-control",
+                                        @placeholder = "Digite o nome do curso...",
+                                        @maxlength = "100",
+                                        @minlength = "1",
+                                        @Required = "required"
+                                    }
+                                })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Sigla</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-font"></i></span>
+                                @Html.EditorFor(model => model.Curso.Sigla, new {
+                                    htmlAttributes = new {
+                                        @id = "curso_sigla",
+                                        @type = "text",
+                                        @class = "form-control",
+                                        @placeholder = "Digite a sigla do curso...",
+                                        @maxlength = "50",
+                                        @minlength = "1",
+                                        @Required = "required"
+                                    }
+                                })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="button" class="btn bg-navy btn margin pull-right" onclick="LimparPartialView()"><i class="fa fa-close"></i>Cancelar</button>
+                        <button type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-check"></i> Salvar</button>
+                    </div>
+                }
+            </div>
+        </div>
+</section>

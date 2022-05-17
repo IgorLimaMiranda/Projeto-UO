@@ -1,0 +1,289 @@
+﻿@model Web.ViewModel.DashboardVM
+
+@{
+//var listaOcorrencias = Model.UltimosChamados;
+//var listaEnsalamentos = Model.EnsalamentosDia;
+}
+
+<script>
+    function Acessar() {
+        window.location.assign("/Ensalamento");
+    }
+    function Acessar2() {
+        window.location.assign("/Ocorrencia");
+    }
+
+    function mudarMapa() {
+        var data = $('#mapaDiario').val();
+        if (data == "" || data == " ") { data = "@DateTime.Today.Date.ToString("dd/MM/yyyy")";}
+        $.ajax({
+            url: 'Dashboard/MudarMapa',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                Data: data
+            }),
+            success: function (result) {
+                var tabela = $('#tab_dashboard_logistica').DataTable(), dispMatutino = 'style = "display:none" "Indisponível"', dispVespertino = "Indisponível", dispNoturno = "Indisponível";
+                var disponivel = '<center><big><img src="/Arquivos/images/icons/aprovacao.png" class="corpo" width="96" height="96" title="Disponível" alt="Disponível"></big></center >';
+                var indisponivel = '<center><big><img src="/Arquivos/images/icons/desaprovado.png" class="corpo" width="118" height="118" title="Indisponível" alt="Indisponível"></big></center>';
+                tabela.clear().draw();
+                for (var i = 0; i < result.length; i++) {
+                    var mapa = new Array(), nome = result[i].Nome, manha = indisponivel, tarde = indisponivel, noite = indisponivel;
+                    if (!result[i].Matutino) {
+                        manha = disponivel;
+                        dispMatutino = "Disponível";
+                    }
+                    if (!result[i].Vespertino) {
+                        tarde = disponivel;
+                        dispVespertino = "Disponível";
+                    }
+                    if (!result[i].Noturno) {
+                        noite = disponivel;
+                        dispNoturno = "Disponível";
+                    }
+                    mapa.push(nome, manha, tarde, noite, dispMatutino, dispVespertino, dispNoturno);
+                    tabela.row.add(mapa).draw();
+                }
+                toastr.info('Confira os resultados na tabela.', 'Mapa diário atualizado', {
+                    "progressBar": true,
+                    "closeButton": true,
+                    "showMethod": "slideDown",
+                    "hideMethod": "slideUp",
+                    "timeOut": 5000
+                });
+            },
+            error: function (response) {
+                toastr.error('Não foi possivel realizar a operação.', 'Desculpe', {
+                    "progressBar": true,
+                    "closeButton": true,
+                    "showMethod": "slideDown",
+                    "hideMethod": "slideUp",
+                    "timeOut": 5000
+                });
+            }
+        });
+    }
+    $(document).ready(function (e) {
+        $("#mapaDiario").datepicker({
+            autoclose: true,
+            inmediateUpdates: true,
+            keyboardNavigation: true,
+            format: "dd/mm/yyyy",
+            language: "pt-BR"
+        });
+    });
+    function docente() {
+        location.href = "/Docente/Index";
+    }
+</script>
+<div class="content-wrapper">
+    <section class="content-header">
+        <ol class="breadcrumb"></ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <div class=" btngg small-box bg-bluue">
+                    <div class="inner">
+                        <p>Quadro de Horários</p>
+                        <br />
+                        <br />
+                    </div>
+                    <div class="icon">
+                        <img src="~/Arquivos/images/icons/clock64.png">
+                    </div>
+                    <a href="#" class="small-box-footer"></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6" onclick="Acessar()">
+                <div class=" btngg small-box bg-orange">
+                    <div class="inner">
+                        <p>Ensalamentos</p>
+                        <br />
+                        <br />
+                    </div>
+                    <div class="icon">
+                        <img src="~/Arquivos/images/icons/door.png">
+                    </div>
+                    <a href="#" class="small-box-footer"></a>
+                </div>
+            </div>
+            <div class="  col-lg-3 col-xs-6" onclick="Acessar2()">
+                <div class=" btngg small-box bg-wine">
+                    <div class="inner">
+                        <p>Ocorrências</p>
+                        <br />
+                        <br />
+                    </div>
+                    <div class="icon">
+                        <img src="~/Arquivos/images/icons/Warning 64.png">
+                    </div>
+                    <a class="small-box-footer"></a>
+                </div>
+            </div>
+
+            
+                <div class="  col-lg-3 col-xs-6" onclick="docente()" >
+                    <div class=" btngg small-box bg-grey">
+                        <div class="inner">
+                            <p>Docentes</p>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="icon">
+                            <img src="~/Arquivos/images/icons/user-outline.png" onclick="docente()">
+                        </div>
+                        <a class="small-box-footer"></a>
+                    </div>
+                </div>
+            
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Ensalamentos do Dia</h3>
+                    </div>
+                    <!-- /.box-header -->
+                <div class="form-group">
+                    <label>Mapa do dia:</label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="mapaDiario" data-format="dd/MM/yyyy" type="text" onchange="mudarMapa()" placeholder="@DateTime.Today.ToString("dd/MM/yyyy")" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="box-body">
+                    <table id="tab_dashboard_logistica" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Sala</th>
+                                <th><center>Matutino</center></th>
+                                <th><center>Vespertino</center></th>
+                                <th><center>Noturno</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*@foreach(var item in listaEnsalamentos) {
+                                <tr>
+                                    <td>@item.Nome</td>
+
+                                    <td>
+                                        <center>
+                                            <big>
+                                                @if(!item.Matutino) {
+                                                    <img src="~/Arquivos/images/icons/aprovacao.png" class="corpo" width="96" height="96" title="Disponível" alt="Disponível">
+}
+                                                else {
+                                                    <img src="~/Arquivos/images/icons/desaprovado.png" class="corpo" width="118" height="118" title="Indisponível" alt="Indisponível">
+}
+                                            </big>
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            <big>
+                                                @if(!item.Vespertino) {
+                                                    <img src="~/Arquivos/images/icons/aprovacao.png" class="corpo" width="96" height="96" title="Disponível" alt="Disponível">
+}
+                                                else {
+                                                    <img src="~/Arquivos/images/icons/desaprovado.png" class="corpo" width="118" height="118" title="Indisponível" alt="Indisponível">
+}
+                                            </big>
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            <big>
+                                                @if(!item.Noturno) {
+                                                    <img src="~/Arquivos/images/icons/aprovacao.png" class="corpo" width="96" height="96" title="Disponível" alt="Disponível">
+}
+                                                else {
+                                                    <img src="~/Arquivos/images/icons/desaprovado.png" class="corpo" width="118" height="118" title="Indisponível" alt="Indisponível">
+}
+                                            </big>
+                                        </center>
+                                    </td>
+                                </tr>}*@
+                        </tbody>
+                        <tfoot>
+
+                            <tr>
+                                <th>Sala</th>
+                                <th><center>Matutino</center></th>
+                                <th><center>Vespertino</center></th>
+                                <th><center>Noturno</center></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="chip">
+                        <img src="~/Arquivos/images/icons/aprovacao.png" width="96" height="96">
+                        Disponível
+                    </div>
+                    <div class="chip">
+                        <img src="~/Arquivos/images/icons/desaprovado.png" width="96" height="96">
+                        Indisponível
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="box box-red">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Ocorrências recém adicionadas</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @*@if(listaOcorrencias.Count == 0) {
+                        <h4>Você não possui nenhuma Ocorrência com status aberto.</h4>}*@
+                    else {
+
+                    }
+                    <ul class="products-list product-list-in-box">
+                        @*@foreach(var ocorrencia in listaOcorrencias) {
+                            <li class="item">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-timestamp pull-right">@ocorrencia.HoraData</span>
+                                </div>
+                                <div class="product-img">
+                                    <img src="~/Arquivos/images/logo/senac-80x80.png" alt="Product Image" />
+                                </div>
+                                <div class="product-info">
+                                    <a href="@Url.Action("Index","Ocorrencia")" class="product-title">
+                                        @ocorrencia.IncidenteRecorrente.Descricao
+                                        <span class="label label-success pull-right">Aberto</span>
+                                    </a>
+                                    <span class="product-description">
+                                        @ocorrencia.Descricao
+                                    </span>
+                                </div>
+                            </li>}*@
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="@Url.Action("Index","Ocorrencia")" class="uppercase">Ver todas as ocorrências</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+</div>
+    </section>
+</div>
+
+<script type="text/javascript" src="~/Arquivos/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="~/Arquivos/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Arquivos/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />

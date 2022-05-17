@@ -1,0 +1,516 @@
+﻿<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Pesquisar ensalamento
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box box-default">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Intervalo</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" id="reservation">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Turno</label>
+                                <div id="turno" class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                    <select class="form-control">
+                                        <option>...</option>
+                                        <option>Matutino</option>
+                                        <option>Vespertino</option>
+                                        <option>Noturno</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Periodicidade</label>
+                                <div id="question2" class="multiChoice">
+                                    <span class="custom-checkbox" id="seg">
+                                        <input type="checkbox" value="2" />
+                                        <span class="box">Dom</span>
+                                    </span>
+                                    <span class="custom-checkbox" id="q2Blue">
+                                        <input type="checkbox" value="0" />
+                                        <span class="box">Seg</span>
+                                    </span>
+
+                                    <span class="custom-checkbox" id="ter">
+                                        <input type="checkbox" value="1" />
+                                        <span class="box">Ter</span>
+                                    </span>
+
+                                    <span class="custom-checkbox" id="qua">
+                                        <input type="checkbox" value="2" />
+                                        <span class="box">Qua</span>
+                                    </span>
+                                    <span class="custom-checkbox" id="qui">
+                                        <input type="checkbox" value="2" />
+                                        <span class="box">Qui</span>
+                                    </span>
+                                    <span class="custom-checkbox" id="sex">
+                                        <input type="checkbox" value="2" />
+                                        <span class="box">Sex</span>
+                                    </span>
+                                    <span class="custom-checkbox" id="sab">
+                                        <input type="checkbox" value="2" />
+                                        <span class="box">Sáb</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Turma</label>
+                                <div id="turma" class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-group"></i></span>
+                                    <select class="form-control">
+                                        <option>...</option>
+                                        <option>Fabrica 188</option>
+                                        <option>Fabrica 32</option>
+                                        <option>Excel 142</option>
+                                        <option>Fotografia 40</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Sala</label>
+                                <div id="sala" class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                    <select class="form-control">
+                                        <option>...</option>
+                                        <option>104</option>
+                                        <option>203</option>
+                                        <option>204</option>
+                                        <option>304</option>
+                                        <option>305</option>
+                                        <option>307</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Ocupante</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <input type="text" class="form-control" placeholder="Digite um Ocupante">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-search"></i> Buscar</button>
+                <button class="btn bg-navy btn margin pull-right"><i class="fa fa-eraser"></i> Limpar Campos</button>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Registro</h3>
+                    </div>
+
+
+                    <div class="box-body">
+
+                        <table id="tab_pesquisa_ensalamento" class="table table-bordered table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Data Início</th>
+                                    <th>Data Fim</th>
+                                    <th>Periodiciodade</th>
+                                    <th>Sala</th>
+                                    <th>Turno</th>
+                                    <th>Tipo</th>
+                                    <th>Turma</th>
+                                    <th>Descrição</th>
+                                    <th>Ocupante</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>20/01/2017</td>
+                                    <td>
+                                        20/02/2018
+                                    </td>
+
+                                    <td>
+                                        <center>
+                                            <table>
+                                                <tr>
+                                                    <td class="espaco"><label>D</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>T</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+
+                                                </tr>
+                                            </table>
+                                        </center>
+
+                                    </td>
+                                    <td> 104</td>
+                                    <td>Vespertino</td>
+                                    <td>Laboratório</td>
+                                    <td>Fabrica 32</td>
+                                    <td>Informática</td>
+                                    <td>Glaucemara</td>
+                                    <td>
+                                        <center>
+                                            <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                            <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>20/01/2017</td>
+                                    <td>20/03/2017</td>
+                                    <td>
+                                        <center>
+                                            <table>
+                                                <tr>
+                                                    <td class="espaco"><label>D</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>T</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+
+                                                </tr>
+                                            </table>
+                                        </center>
+                                    </td>
+                                    <td>Win 95+</td>
+                                    <td></td>
+                                    <td>C</td>
+                                    <td>Trident</td>
+                                    <td>Internet Explorer 7</td>
+                                    <td>Win XP SP2+</td>
+                                    <td>
+                                        <center>
+                                            <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                            <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>20/01/2017</td>
+                                    <td>20/03/2017</td>
+                                    <td>
+                                        <center>
+                                            <table>
+                                                <tr>
+                                                    <td class="espaco"><label>D</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>T</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+
+                                                </tr>
+                                            </table>
+                                        </center>
+                                    </td>
+                                    <td>5.5</td>
+                                    <td>A</td>
+                                    <td>Trident</td>
+                                    <td>Internet Explorer 7</td>
+                                    <td>Win XP SP2+</td>
+                                    <td>7</td>
+                                    <td>
+                                        <center>
+                                            <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                            <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>20/01/2017</td>
+                                    <td>20/03/2017</td>
+                                    <td>
+                                        <center>
+                                            <table>
+                                                <tr>
+                                                    <td class="espaco"><label>D</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>T</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+
+                                                </tr>
+                                            </table>
+                                        </center>
+                                    </td>
+                                    <td>6</td>
+                                    <td>A</td>
+                                    <td>Trident</td>
+                                    <td>Internet Explorer 7</td>
+                                    <td>Win XP SP2+</td>
+                                    <td>7</td>
+                                    <td>
+                                        <center>
+                                            <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                            <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        </center>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>20/01/2017</td>
+                                    <td>20/03/2017</td>
+                                    <td>
+                                        <center>
+                                            <table>
+                                                <tr>
+                                                    <td class="espaco"><label>D</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>T</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+
+                                                </tr>
+                                            </table>
+                                        </center>
+                                    </td>
+                                    <td>7</td>
+                                    <td>A</td>
+                                    <td>Trident</td>
+                                    <td>Internet Explorer 7</td>
+                                    <td>Win XP SP2+</td>
+                                    <td>7</td>
+                                    <td>
+                                        <center>
+                                            <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                            <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>20/01/2017</td>
+                                    <td>20/03/2017</td>
+                                    <td>
+                                        <center>
+                                            <table>
+                                                <tr>
+                                                    <td class="espaco"><label>D</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>T</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+
+                                                </tr>
+                                            </table>
+                                        </center>
+                                    </td>
+                                    <td>7</td>
+                                    <td>Trident</td>
+                                    <td>Internet Explorer 7</td>
+                                    <td>Win XP SP2+</td>
+                                    <td>7</td>
+                                    <td>A</td>
+                                    <td>
+                                        <center>
+                                            <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                            <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>20/01/2017</td>
+                                    <td>20/03/2017</td>
+                                    <td>
+                                        <center>
+                                            <table>
+                                                <tr>
+                                                    <td class="espaco"><label>D</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>T</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+
+                                                </tr>
+                                            </table>
+                                        </center>
+                                    </td>
+                                    <td>7</td>
+                                    <td>A</td>
+                                    <td>Trident</td>
+                                    <td>Internet Explorer 7</td>
+                                    <td>Win XP SP2+</td>
+                                    <td>7</td>
+                                    <td>
+                                        <center>
+                                            <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                            <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>20/01/2017</td>
+                                    <td>20/03/2017</td>
+                                    <td>
+                                        <center>
+                                            <table>
+                                                <tr>
+                                                    <td class="espaco"><label>D</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>T</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>Q</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+                                                    <td class="espaco"><label>S</label></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+                                                    <td><input type="checkbox" class="minimal"></td>
+
+                                                </tr>
+                                            </table>
+                                        </center>
+                                    </td>
+                                    <td>7</td>
+                                    <td>A</td>
+                                    <td>Trident</td>
+                                    <td>Internet Explorer 7</td>
+                                    <td>Win XP SP2+</td>
+                                    <td>7</td>
+                                    <td>
+                                        <center>
+                                            <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                            <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        </center>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Data Início</th>
+                                    <th>Data Fim</th>
+                                    <th>Periodiciodade</th>
+                                    <th>Sala</th>
+                                    <th>Turno</th>
+                                    <th>Tipo</th>
+                                    <th>Turma</th>
+                                    <th>Descrição</th>
+                                    <th>Ocupante</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,71 @@
+﻿@model Web.ViewModel.CadastroSalaVM
+
+<style type="text/css">
+    tr.active {
+        background-color: #fcc;
+    }
+</style>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Cadastro de Sala
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Registros</h3>
+                <button type="button" class="button btnBolivia pull-right" onclick="PartialViewCadastrarSala('@Url.Action("Cadastrar", "CadastroSala")')">
+                    <i class="fa fa-plus">
+                    </i>
+                </button>
+            </div>
+            <div class="box-body">
+                <table id="tab_cadastro_sala" class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Tipo de sala</th>
+                            <th>Andar</th>
+                            <th>Capacidade</th>
+                            <th>Descrição</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var sala in Model.Salas) {
+                            <tr>
+                                @Html.HiddenFor(model => sala.Nome)
+                                <td>@Html.DisplayFor(model => sala.Numero)</td>
+                                <td>@Html.DisplayFor(model => sala.Tipo)</td>
+                                <td>@Html.DisplayFor(model => sala.Andar)</td>
+                                <td>@Html.DisplayFor(model => sala.Capacidade)</td>
+                                <td>@Html.DisplayFor(model => sala.Descricao)</td>
+                                <td>
+                                    <center>
+                                        <button type="button" class="btn btn-social-icon btn-primary" onclick="PopupFormEditarSala('@Url.Action("EditarSala", "CadastroSala", sala)');"><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-warning" onclick="PopupFormExcluirSala('@Url.Action("ExcluirSala", "CadastroSala", sala)')"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-info" onclick="PopupFormVisualizarSala('@Url.Action("VisualizarSala", "CadastroSala", sala)')"><i class="fa fa-eye"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-default" onclick="PopupFormRecursoSala('@Url.Action("RecursoSala", "CadastroSala", sala)')"><i class="fa fa-cube"></i></button>
+                                    </center>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Número</th>
+                            <th>Tipo de sala</th>
+                            <th>Andar</th>
+                            <th>Capacidade</th>
+                            <th>Descrição</th>
+                            <th>Ação</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div id="cadastro" />
+    </section>
+</div>

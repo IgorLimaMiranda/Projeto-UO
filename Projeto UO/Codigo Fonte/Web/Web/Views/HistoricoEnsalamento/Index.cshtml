@@ -1,0 +1,174 @@
+﻿@model Web.ViewModel.HistoricoEnsalamentoVM
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Histórico Ensalamento
+        </h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            @Html.AntiForgeryToken()
+            <div class="col-md-12 ">
+                <div class="box box-primary" id="caixa_filtro">
+                    <div style="cursor:pointer;" class="box-header with-border" onclick="abrirCaixa()">
+                        <h3 class="box-title">Pesquisa Avançada</h3>
+                        <div class="box-tools pull-right">
+                            <button id="toggle-button" type="button" class="btn btn-box-tool" data-widget="toggle" onclick="LimparPartialView()">
+                                <i class="fa fa-angle-down fa-2x"></i>
+                            </button>
+                        </div>
+                    </div>
+                    @using(Html.BeginForm("Pesquisar", "HistoricoEnsalamento", FormMethod.Get)) {
+                        <div class="box-body">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Intervalo</label>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.EditorFor(model => model.IntervaloHistorico, new {
+                                           htmlAttributes = new {
+                                               @id = "data_ranger",
+                                               @class = "form-control pull-right",
+                                               @type = "text"
+                                           }
+                                       })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Sala</label>
+                                    <div id="sala" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                        @Html.DropDownListFor(
+                                           salas => Model.HistoricoEnsalamento.Sala, Model.ListarSalas(), "...", htmlAttributes: new {
+                                               @id = "cb-sala",
+                                               @class = "form-control"
+                                           })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Turno</label>
+                                    <div id="sala" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                        @Html.DropDownListFor(
+                                           turnos => Model.HistoricoEnsalamento.Turno, Model.ListarTurno(), "...", htmlAttributes: new {
+                                               @id = "cb-turno",
+                                               @class = "form-control"
+                                           })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Usuário</label>
+                                    <div id="usuario" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        @Html.DropDownListFor(
+                                           usuarios => Model.HistoricoEnsalamento.Usuario, Model.ListarUsuarios(), "...", htmlAttributes: new {
+                                               @id = "cb-usuario",
+                                               @class = "form-control"
+                                           })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Turma</label>
+                                    <div id="turma" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-group"></i></span>
+                                        @Html.DropDownListFor(
+                                           turmas => Model.HistoricoEnsalamento.Turma, Model.ListarTurmas(), "...", htmlAttributes: new {
+                                               @id = "cb-turma",
+                                               @class = "form-control"
+                                           })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ação</label>
+                                    <div id="acao" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-share-alt"></i></span>
+                                        @Html.DropDownListFor(
+                                           acao => Model.HistoricoEnsalamento.Acao, Model.ListarAcao(), "...", htmlAttributes: new {
+                                               @id = "cb-acao",
+                                               @class = "form-control"
+                                           })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Professor</label>
+                                    <div id="professor" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        @Html.DropDownListFor(
+                                           ocupantes => Model.HistoricoEnsalamento.Ocupante, Model.ListarOcupantes(), "...", htmlAttributes: new {
+                                               @id = "cb-professor",
+                                               @class = "form-control"
+                                           })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="box-footer">
+                                <button type="reset" class="btn bg-navy btn margin pull-right"><i class="fa fa-eraser"></i> Limpar Campos</button>
+                                <button type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-search"></i> Buscar</button>
+                            </div>  }
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Registro</h3>
+                <text @Html.Raw(Model.Pesquisa)><a href="@Url.Action("Index", "HistoricoEnsalamento")" class="button clearfilter pull-right"><img src="~/Arquivos/images/icons/refresh.png" class="centerfilter" width="18"></a></text>
+            </div>
+            <div class="box-body">
+                <table id="tab_pesquisa_ensalamento" class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Intervalo</th>
+                            <th>Sala</th>
+                            <th>Turma</th>
+                            <th>Turno</th>
+                            <th>Ocupante</th>
+                            <th>Usuário</th>
+                            <th>Ação</th>
+                            <th>Data da Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var his in Model.Historicos) {
+                            <tr>
+                                <td>@Html.DisplayFor(model => his.DataInicio) - @Html.DisplayFor(model => his.DataFim)</td>
+                                <td>@Html.DisplayFor(model => his.Sala)</td>
+                                <td>@Html.DisplayFor(model => his.Turma)</td>
+                                <td>@Html.DisplayFor(model => his.Turno)</td>
+                                <td>@Html.DisplayFor(model => his.Ocupante)</td>
+                                <td>@Html.DisplayFor(model => his.Usuario)</td>
+                                <td>@Html.DisplayFor(model => his.Acao)</td>
+                                <td>
+                                    @Html.DisplayFor(model => his.DataHora)
+                                    @*<center>
+                                            <button type="button" class="btn btn-social-icon btn-info" onclick="PopupFormVisualizarHistoricoEnsalamento('@Url.Action("VisualizarHistoricoEnsalamento", "HistoricoEnsalamento", his)')"><i class="fa fa-eye"></i></button>
+                                        </center>*@
+                                </td>
+                            </tr>}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Intervalo</th>
+                            <th>Sala</th>
+                            <th>Turma</th>
+                            <th>Turno</th>
+                            <th>Ocupante</th>
+                            <th>Usuário</th>
+                            <th>Ação</th>
+                            <th>Data da Ação</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

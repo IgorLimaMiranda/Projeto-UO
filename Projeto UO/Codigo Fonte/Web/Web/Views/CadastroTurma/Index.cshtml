@@ -1,0 +1,54 @@
+﻿@model Web.ViewModel.CadastroTurmaVM
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>Turma</h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Registros</h3>
+                <button type="button" class="button btnBolivia pull-right" onclick="PartialViewCadastrarTurma('@Url.Action("Cadastrar", "CadastroTurma")')">
+                    <i class="fa fa-plus">
+                    </i>
+                </button>
+            </div>
+            <div class="box-body">
+                <table id="tab_cadastro_turma" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Codigo da Turma</th>
+                            <th>Ano da Turma</th>
+                            <th>Curso</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var turma in Model.Turmas) {
+                            <tr>
+                                <td>@Html.DisplayFor(model => turma.Id)</td>
+                                <td>@Html.DisplayFor(model => turma.Ano)</td>
+                                <td>@Html.DisplayFor(model => turma.Curso.Descricao)</td>
+                                <td>
+                                    <center>
+                                        <button type="button" class="btn btn-social-icon btn-primary" onclick="PartialViewAlterarTurma('@Url.Action("EditarTurma", "CadastroTurma", turma)')"><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-warning" onclick="PopupFormExcluirTurma('@Url.Action("ExcluirTurma", "CadastroTurma", turma)')"><i class="fa fa-trash"></i></button>
+                                    </center>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tr>
+                        <th>Codigo da Turma</th>
+                        <th>Ano da Turma</th>
+                        <th>Curso</th>
+                        <th>Ação</th>
+                    </tr>
+                    <tfoot>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div id="cadastro" />
+    </section>
+</div>

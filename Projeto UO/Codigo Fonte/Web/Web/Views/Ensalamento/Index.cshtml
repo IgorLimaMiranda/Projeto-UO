@@ -1,0 +1,224 @@
+﻿@model Web.ViewModel.EnsalamentoVM
+<script type="text/javascript" language="javascript" src="~/Arquivos/Ensalamento.js"></script>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Ensalamento
+        </h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary" id="caixa_filtro">
+                    <div style="cursor:pointer;" class="box-header with-border" onclick="abrirCaixa()">
+                        <h3 class="box-title">Pesquisa Avançada</h3>
+                        <div class="box-tools pull-right">
+                            <button id="toggle-button" type="button" class="btn btn-box-tool" data-widget="toggle" onclick="LimparPartialView()">
+                                <i class="fa fa-angle-down fa-2x"></i>
+                            </button>
+                        </div>
+                    </div>
+                    @using (Html.BeginForm("Pesquisar", "Ensalamento", FormMethod.Get)) {
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Intervalo</label>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.EditorFor(model => model.IntervaloEnsalamento, new {
+                                                htmlAttributes = new {
+                                                    @id = "data_ranger",
+                                                    @class = "form-control",
+                                                    @type = "text"
+                                                }
+                                            })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Turno</label>
+                                    <div id="turno" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                        @Html.DropDownListFor(
+                                                                          lista => lista.Ensalamento.Periodo, Model.ListarTurnos(),
+                                                                          "...", htmlAttributes: new {
+                                                                              @id = "IdListaTurnos",
+                                                                              @class = "form-control"
+
+                                                                          })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        Listar Por:
+                                        <button type="button" class="btn btn-box-tool ajuste-izinho" data-toggle="tooltip" title="ACERTOS, busca por resultados mais precisos. RELEVÂNCIA, busca por qualquer item relacionado à sua pesquisa." data-widget="chat-pane-toggle"> <big><i class="fa fa-info-circle"></i></big></button>
+                                    </label>
+                                    <div id="tipoDePesquisa" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        @Html.DropDownListFor(
+                                                                          lista => lista.TipoDePesquisa, Model.ListarTipoDePesquisa(),
+                                                                            htmlAttributes: new {
+                                                                                @id = "tipoDePesquisa",
+                                                                                @class = "form-control"
+
+                                                                            })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Turma</label>
+                                    <div id="turma" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-group"></i></span>
+                                        @Html.DropDownListFor(
+                                                                lista => lista.ChaveTurma, Model.ListarTurmas(),
+                                                                             "...", htmlAttributes: new {
+                                                                                 @id = "IdListaTurmas",
+                                                                                 @class = "form-control"
+
+                                                                             })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Sala</label>
+                                    <div id="sala" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                        @Html.DropDownListFor(
+                                                      lista => lista.Ensalamento.IdSala, Model.ListarSalas(),
+                                                                   "...", htmlAttributes: new {
+                                                                       @id = "IdListaSalas",
+                                                                       @class = "form-control"
+                                                                   })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Ocupante</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        @Html.EditorFor(model => model.Ensalamento.Ocupante, new {
+                                            htmlAttributes = new {
+                                                @id = "ocupante",
+                                                @class = "form-control pull-right",
+                                                @type = "text",
+                                                @placeholder = "Digite um Ocupante"
+                                            }
+                                        })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="reset" class="btn bg-navy btn margin pull-right"><i class="fa fa-eraser"></i> Limpar Campos</button>
+                            <button type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-search"></i> Buscar</button>
+                        </div>}
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title" style="@Html.DisplayFor(model => model.EstiloNomeTabela)">@Html.DisplayFor(model => model.NomeTabela)</h3>
+
+                @if (Model.IsPesquisa) {<a href="@Url.Action("Index", "Ensalamento")" data-toggle="tooltip" title="Limpar resultados da pesquisa" class="button clearfilter pull-right"><img src="~/Arquivos/images/icons/refresh.png" class="centerfilter" width="18"></a>}
+                else {<a title="Limpar resultados da pesquisa" data-toggle="tooltip" disabled="disabled" style="background-color:gray;" class="button clearfilter pull-right"><img src="~/Arquivos/images/icons/refresh.png" class="centerfilter" width="18"></a>}
+
+                <button style="@Html.DisplayFor(model => Model.MenuCadastro)" type="button" class="button btnBolivia pull-right" onclick="PartialViewCadastrarEnsalamento('@Url.Action("Cadastrar", "CadastroEnsalamento")')">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <div class="box-body">
+                <table id="tab_cadastro_ensalamento" class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Período do Ensalamento</th>
+                            <th style="display:none">Periodicidade</th>
+                            <th>Periodicidade</th>
+                            <th>Turno</th>
+                            <th>Sala</th>
+                            <th style="display:none">Sala</th>
+                            <th>Turma</th>
+                            <th style="display:none">Turma</th>
+                            <th>Ocupante</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.IsEnsalamentos) {
+                            for (int i = 0; i < Model.Ensalamentos.Count(); i++) {
+                                <tr>
+                                    <td>@Html.DisplayFor(model => Model.Ensalamentos[i].Data) - @Html.DisplayFor(model => Model.Ensalamentos[i].DataFim) </td>
+                                    <td style="display:none">@Html.DisplayFor(model => model.ColunaOcultaPeriodicidade[i])</td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td class="espaco"><label>D</label></td>
+                                                <td class="espaco"><label>S</label></td>
+                                                <td class="espaco"><label>T</label></td>
+                                                <td class="espaco"><label>Q</label></td>
+                                                <td class="espaco"><label>Q</label></td>
+                                                <td class="espaco"><label>S</label></td>
+                                                <td class="espaco"><label>S</label></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.CheckBoxFor(model => Model.PeriodicidadeTabela[i][0], new { @disabled = "disabled", @title = "Domingo" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.PeriodicidadeTabela[i][1], new { @disabled = "disabled", @title = "Segunda" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.PeriodicidadeTabela[i][2], new { @disabled = "disabled", @title = "Terça" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.PeriodicidadeTabela[i][3], new { @disabled = "disabled", @title = "Quarta" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.PeriodicidadeTabela[i][4], new { @disabled = "disabled", @title = "Quinta" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.PeriodicidadeTabela[i][5], new { @disabled = "disabled", @title = "Sexta" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.PeriodicidadeTabela[i][6], new { @disabled = "disabled", @title = "Sábado" })</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>@Html.DisplayFor(model => Model.Turnos[Model.Ensalamentos[i].Periodo - 1])</td>
+                                    <td nowrap title="@Html.DisplayFor(model => Model.Ensalamentos[i].Sala.Tipo) - @Html.DisplayFor(model => Model.Ensalamentos[i].Sala.Descricao)">
+                                        @Html.DisplayFor(model => Model.Ensalamentos[i].Sala.Numero) - @Html.DisplayFor(model => model.Ensalamentos[i].Sala.Andar)
+                                    </td>
+                                    <td style="display:none" nowrap>
+                                        @Html.DisplayFor(model => Model.Ensalamentos[i].Sala.Numero) - @Html.DisplayFor(model => model.Ensalamentos[i].Sala.Andar) - @Html.DisplayFor(model => Model.Ensalamentos[i].Sala.Tipo) - @Html.DisplayFor(model => Model.Ensalamentos[i].Sala.Descricao)
+                                    </td>
+                                    <td title="@Html.DisplayFor(model => Model.Ensalamentos[i].Turma.Curso.Descricao) @Html.DisplayFor(model => Model.Ensalamentos[i].Turma.Ano)">
+                                        @Html.DisplayFor(model => Model.Ensalamentos[i].Turma.Id) / @Html.DisplayFor(model => Model.Ensalamentos[i].Turma.Ano)
+                                    </td>
+                                    <td style="display:none" nowrap>
+                                        @Html.DisplayFor(model => Model.Ensalamentos[i].Turma.Id) / @Html.DisplayFor(model => Model.Ensalamentos[i].Turma.Ano) - @Html.DisplayFor(model => Model.Ensalamentos[i].Turma.Curso.Descricao)
+                                    </td>
+                                    <td>@Html.DisplayFor(model => Model.Ensalamentos[i].Ocupante)</td>
+                                    <td nowrap>
+                                        <center>
+                                            @Html.HiddenFor(model => Model.Ensalamentos[i].Id)
+                                            @Html.HiddenFor(model => Model.Ensalamentos[i].Id)
+                                            <button style="@Html.DisplayFor(model => model.MenuCadastro)" type="button" class="btn btn-social-icon btn-primary" onclick="PopupFormEditarEnsalamento('@Url.Action("EditarEnsalamento", "CadastroEnsalamento", Model.Ensalamentos[i])');"><i class="fa fa-edit"></i></button>
+                                            <button style="@Html.DisplayFor(model => model.MenuCadastro)" type="button" class="btn btn-social-icon btn-warning" onclick="PopupFormExcluirEnsalamento('@Url.Action("ExcluirEnsalamento", "CadastroEnsalamento", Model.Ensalamentos[i])')"><i class="fa fa-trash"></i></button>
+                                        </center>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Período do Ensalamento</th>
+                            <th style="display:none">Periodicidade</th>
+                            <th>Periodicidade</th>
+                            <th>Turno</th>
+                            <th>Sala</th>
+                            <th style="display:none">Sala</th>
+                            <th>Turma</th>
+                            <th style="display:none">Turma</th>
+                            <th>Ocupante</th>
+                            <th style="@Html.DisplayFor(model => model.MenuCadastro)">Ações</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div id="cadastro" />
+    </section>
+</div>

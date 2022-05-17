@@ -1,0 +1,100 @@
+﻿@model Web.ViewModel.CadastroUsuarioVM
+
+<script type="text/javascript">
+    function formatar(mascara, documento) {
+        //Remove tudo o que não é dígito
+        documento.value = documento.value.replace(/\D/g, "")
+        documento.value = documento.value.replace(/(\d{3})(\d)/, "$1.$2")
+
+        //Coloca um ponto entre o terceiro e o quarto dígitos
+        //de novo (para o segundo bloco de números)
+        documento.value = documento.value.replace(/(\d{3})(\d)/, "$1.$2")
+
+        //Coloca um hífen entre o terceiro e o quarto dígitos
+        documento.value = documento.value.replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+    }
+</script>
+
+<script type="text/javascript">
+    function eixoVisivel() {
+        if (document.getElementById("cb_tipo_usuario").selectedIndex == 5) {            
+            document.getElementById("eixo_professor_visivel").style.display = "block";
+            document.getElementById("cb_eixo_educacional").required = true;
+        } else {
+            document.getElementById("eixo_professor_visivel").style.display = "none";
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    function validarSenha() {
+        var senha = document.getElementById("usuario_senha"),
+            confirmaSenha = document.getElementById("usuario_confirmar_senha");
+        if (senha.value != confirmaSenha.value) {
+            confirmaSenha.setCustomValidity("Senhas são direfentes");
+        } else {
+            confirmaSenha.setCustomValidity("");
+        }
+    }
+</script>
+
+<div class="content-wrapper">
+    
+    <section class="content-header">
+        <h1>
+            Usuário
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Registros</h3>
+                <button type="button" class="button btnBolivia pull-right" onclick="PartialViewCadastrarUsuario('@Url.Action("Cadastrar", "CadastroUsuario")')">
+                    <i class="fa fa-plus">
+                    </i>
+                </button>
+            </div>
+            <div class="box-body">
+                <table id="tab_cadastro_usuario" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>CPF</th>
+
+                            <th>Nome Completo</th>
+                            <th>Email</th>
+                            <th>Cargo do Usuário</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var usuario in Model.Usuarios) {
+                            <tr>
+                                <td>@Html.DisplayFor(model => usuario.Cpf)</td>
+                                <td>@Html.DisplayFor(model => usuario.Nome)</td>
+                                <td>@Html.DisplayFor(model => usuario.Email)</td>
+                                <td>@Html.DisplayFor(model => usuario.TipoUsuario)</td>
+                                <td>
+                                    <center>
+                                        <button type="button" class="btn btn-social-icon btn-primary" onclick="PopupFormEditarUsuario('@Url.Action("AlterarUsuario", "CadastroUsuario", usuario)')"><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-warning" onclick="PopupFormExcluirUsuario('@Url.Action("ExcluirUsuario", "CadastroUsuario", usuario)')"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-info" onclick="PopupFormVisualizarUsuario('@Url.Action("VisualizarUsuario", "CadastroUsuario", usuario)')"><i class="fa fa-eye"></i></button>
+                                    </center>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>CPF</th>
+                            <th>Nome Completo</th>
+                            <th>Email</th>
+                            <th>Cargo do Usuário</th>
+                            <th>Ação</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div id="cadastro" />
+    </section>
+</div>

@@ -1,0 +1,112 @@
+﻿@model Web.ViewModel.PrimeiroAcessoVM
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<script type="text/javascript">
+
+    function validarSenha() {
+        var senha = document.getElementById("pr-password"),
+            confirmaSenha = document.getElementById("pr-confirma-password");
+        if (senha.value != confirmaSenha.value) {
+            confirmaSenha.setCustomValidity("Senhas são direfentes");
+        } else {
+            confirmaSenha.setCustomValidity("");
+        }
+    }
+</script>
+
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <section class="flexbox-container p-3">
+                <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1 box-shadow-2 p-0">
+                    <div class="card border-grey border-lighten-3 px-0 py-3 m-0">
+                        <div class="card-header no-border">
+                            <div class="card-title text-xs-center">
+                                <div class="p-1"><img src="~/Arquivos/images/logo/Senac.png" alt="Senac Logo"></div>
+                            </div>
+                            <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Primeiro Acesso</span></h6>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                @using (Html.BeginForm("Index", "PrimeiroAcesso", FormMethod.Post)) {
+                                    @Html.HiddenFor(model => model.Usuario.Cpf)
+                                    @Html.HiddenFor(model => model.Usuario.Nome)
+                                    @Html.HiddenFor(model => model.Usuario.Email)
+                                    @Html.HiddenFor(model => model.Usuario.ImagemUsuario)
+                                    @Html.HiddenFor(model => model.Usuario.PrimeiroAcesso)
+                                    @Html.HiddenFor(model => model.Usuario.TipoUsuario)
+                                    <fieldset class="form-group position-relative has-icon-left mb-0">
+                                        <div class="form-group">
+                                            @Html.DropDownListFor(
+                                                usuarios => Model.Usuario.Pergunta, Model.ListarPerguntaUsuario(), "Pergunta Secreta", htmlAttributes: new {
+                                                    @id = "combo_box_pergunta_usuario",
+                                                    @class = "form-control form-control-lg input-lg",
+                                                    @Required = "required"
+                                            })
+                                        </div>
+                                        <div class="form-control-position">
+                                            <i class="icon-key22 ajuste-icon "></i>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="form-group position-relative has-icon-left">
+                                        @Html.EditorFor(model => model.Usuario.Resposta, new {
+                                            htmlAttributes = new {
+                                                @id = "pr-resposta",
+                                                @type = "text",
+                                                @class = "form-control form-control-lg input-lg",
+                                                @placeholder = "Resposta",
+                                                @maxlength = "50",
+                                                @Required = "required"
+                                            }
+                                        })
+                                        <div class="form-control-position">
+                                            <i class="icon-help"></i>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="form-group position-relative has-icon-left">
+                                        @Html.EditorFor(model => model.Senha, new {
+                                       htmlAttributes = new {
+                                           @id = "pr-password",
+                                           @type = "password",
+                                           @class = "form-control form-control-lg input-lg",
+                                           @placeholder = "Nova senha",
+                                           @maxlength = "16",
+                                           @minlength = "8",
+                                           @Required = "required",
+                                           @onkeyup = "validarSenha()"
+                                       }
+                                   })
+                                        <div class="form-control-position">
+                                            <i class="icon-key3"></i>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="form-group position-relative has-icon-left">
+                                        @Html.EditorFor(model => model.ConfirmarSenha, new {
+                                       htmlAttributes = new {
+                                           @id = "pr-confirma-password",
+                                           @type = "password",
+                                           @class = "form-control form-control-lg input-lg",
+                                           @placeholder = "Confirmar senha",
+                                           @maxlength = "16",
+                                           @minlength = "8",
+                                           @Required = "required",
+                                           @onkeyup = "validarSenha()"
+                                       }
+                                   })
+                                        <div class="form-control-position">
+                                            <i class="icon-key3"></i>
+                                        </div>
+                                    </fieldset>
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i>Cadastrar</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

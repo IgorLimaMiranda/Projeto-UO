@@ -1,0 +1,641 @@
+﻿@media screen and (min-width: 768px)
+{
+    #menu-ativar
+    {
+        visibility: hidden;
+    }
+}
+
+.ajuste-icon
+{
+    padding-top: 7px !important;
+    padding-left: 7px !important;
+}
+
+.ajute-box
+{
+    left: 68px;
+    top: -50px;
+}
+
+.ajuste-izinho
+{
+    position: absolute;
+    top: 163px;
+}
+
+.btn-alinhamtento-button
+{
+    margin-top: 50px
+}
+
+.espaco
+{
+    letter-spacing: 1em;
+}
+
+/* MAPA DIARIO FLAGS */
+.chip {
+    display: inline-block;
+    padding: 0 25px;
+    height: 30px;
+    font-size: 16px;
+    line-height: 30px;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+}
+
+.chip img {
+    float: left;
+    margin: 0 10px 0 -25px;
+    height: 30px;
+    width: 35px;
+    /*border-radius: 50%;*/
+}
+
+.corpo{
+    margin: 0 10px 0 -25px;
+    height: 30px;
+    width: 35px;
+    /*border-radius: 50%;*/
+}
+/* FIM MAPA DIARIO FLAGS */
+
+/* CHECK BOX - LUCAS BOLIVIA */
+.badgebox
+{
+    opacity: 0;
+}
+
+    .badgebox :disabled
+    {
+        opacity: 75;
+    }
+
+    .badgebox + .badge
+    {
+        text-indent: -999999px;
+        width: 27px;
+    }
+
+    .badgebox:focus + .badge
+    {
+        box-shadow: inset 0px 0px 5px;
+    }
+
+    .badgebox:checked + .badge
+    {
+        text-indent: 0;
+    }
+/* CHECK BOX - LUCAS BOLIVIA */
+
+/* Tooltip - Gabriel Souza*/
+
+.tooltipGabriel {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltipGabriel .tooltiptextGabriel {
+    visibility: hidden;
+    width: 400px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltipGabriel .tooltiptextGabriel::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltipGabriel:hover .tooltiptextGabriel {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Fim Tooltip - Gabriel Souza*/
+
+/*CSS profile upload*/
+.kv-avatar .krajee-default.file-preview-frame, .kv-avatar .krajee-default.file-preview-frame:hover
+{
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+
+.kv-avatar
+{
+    display: inline-block;
+}
+
+    .kv-avatar .file-input
+    {
+        display: table-cell;
+        width: 213px;
+    }
+
+.kv-reqd
+{
+    color: red;
+    font-family: monospace;
+    font-weight: normal;
+}
+/*FIM CSS PROFILE UPLOAD*/
+
+/* BOTAO - LUCAS BOLIVIA*/
+.btnBolivia
+{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 0px solid #ec971f;
+    background-color: #ec971f;
+    color: white;
+}
+
+.centerfilter
+{
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 11px;
+}
+
+.clearfilter
+{
+    margin-left: 5px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 0px solid #ec971f;
+    background-color: #ec971f;
+    color: white;
+}
+
+.btnrecursosala
+{
+    margin-top: -85px;
+    margin-bottom: 2px;
+    margin-left: 759px;
+}
+
+.labelulisses
+{
+    margin-right: 42px;
+    margin-left: -42px;
+    padding-right: 10px;
+    padding-left: 28px;
+}
+
+.scroll-box
+{
+    background: #fafafa;
+    height: 500px;
+    overflow: auto;
+}
+
+.circle-verde
+{
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    background-color: #008000 !important;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+}
+
+.bg-green, .callout.callout-success, .alert-success, .label-success, .modal-success .modal-body
+{
+    background-color: #345644 !important;
+}
+
+.circle-vermelho
+{
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    background-color: #a7490b !important;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+}
+
+.circle-azul-turquesa
+{
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    background-color: #24a3b7 !important;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+}
+
+.bg-azul-turquesa
+{
+    background-color: #24a3b7 !important;
+    color: white !important;
+}
+
+.bg-red, .callout.callout-danger, .alert-danger, .alert-error, .label-danger, .modal-danger .modal-body
+{
+    background-color: #a7490b !important;
+}
+
+.circle-amarelo
+{
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    background-color: #ec971f !important;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+}
+
+.bg-yellow, .callout.callout-warning, .alert-warning, .label-warning, .modal-warning .modal-body
+{
+    background-color: #ec971f !important;
+}
+
+.circle-azul
+{
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    background-color: #0073b7 !important;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+}
+
+.circle-cinza
+{
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    background-color: gray !important;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+}
+/* BOTAO - LUCAS BOLIVIA*/
+
+
+
+/*BTN EDITAR*/
+.btn-primary:hover
+{
+    background-color: #113C66 !important;
+}
+
+.btn-primary
+{
+    background-color: #113C66 !important;
+    color: #fff !important;
+    border-color: #113C66 !important;
+}
+
+    .btn-primary:hover
+    {
+        background-color: #113C66 !important;
+        color: #fff !important;
+        border-color: #113C66 !important;
+    }
+
+
+/*BTN EXCLUIR*/
+.btn-warning
+{
+    background-color: #fb900f !important;
+    color: #fff !important;
+    border-color: #fb900f !important;
+}
+
+.btn-warning
+{
+    background-color: #fb900f;
+}
+
+/*BTN VISUALIZAR*/
+.btn-info
+{
+    background-color: #a54b00 !important;
+    color: #fff !important;
+    border-color: #a54b00 !important;
+}
+
+.btn-info
+{
+    background-color: #a54b00;
+}
+
+/*BTN DROP BOX*/
+.btn-default
+{
+    background-color: #555555 !important;
+    color: #fff !important;
+    border-color: #555555 !important;
+}
+
+.btn-default-2
+{
+    background-color: #d3d3d3 !important;
+    color: #fff !important;
+    border-color: #d3d3d3 !important;
+    cursor: default;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover
+{
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #f7902c !important;
+    border-color: #f7902c !important;
+}
+
+/*BTN-CANCELAR*/
+
+.bg-navy
+{
+    background-color: #113C66 !important;
+}
+
+
+
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer
+{
+    background-color: #e2810f;
+    padding: 10px;
+}
+
+
+
+/*DASHBOARD*/
+
+.bg-wine
+{
+    background-color: #a7490b !important;
+    color: #eee;
+}
+
+.bg-bluue
+{
+    background-color: #123c63 !important;
+    color: #eee;
+}
+
+.bg-grey
+{
+    background-color: #555555 !important;
+    color: #eee;
+}
+
+div > label
+{
+    display: block;
+    margin-bottom: 15px;
+}
+
+.custom-checkbox
+{
+    position: relative;
+    display: inline-block;
+}
+
+.custom-checkbox-1
+{
+    position: relative;
+    display: inline-block;
+}
+
+
+.custom-checkbox > input
+{
+    position: absolute;
+    outline: none;
+    left: 0;
+    top: 0;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    border: none;
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+
+.custom-checkbox-1 > input
+{
+    position: absolute;
+    outline: none;
+    left: 0;
+    top: 0;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    border: none;
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* DEFAULT STYLES */
+/* DEFAULT STYLES */
+/*.custom-checkbox > .box
+    {
+        background-color: #ffffff;
+        box-sizing: border-box;
+        display: inline-block;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        width: 50px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: crosshair;
+        float: left;
+        font-size: 16px;
+        margin-bottom: 20px;
+        margin-right: 10px;
+        position: relative;
+        font-weight: bold;
+        display: block;
+    }*/
+
+.custom-checkbox-1 > .box
+{
+    background-color: #ffffff;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    width: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    float: left;
+    font-size: 16px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    position: relative;
+    font-weight: bold;
+    display: block;
+}
+
+    /*.custom-checkbox > .box > .tick
+        {
+            display: none;
+        }*/
+
+    .custom-checkbox-1 > .box > .tick
+    {
+        display: none;
+    }
+
+/* CHECKED STYLES */
+/*.custom-checkbox > input:checked ~ .box,*/
+/*IE8*/ /*.custom-checkbox.checked > .box
+    {
+        background: #113c66;
+        color: #FFF;
+    }*/
+/*IE8*/
+.custom-checkbox-1 > input:checked ~ .box > .tick,
+.custom-checkbox.checked > .box > .tick
+{
+    display: block;
+}
+
+
+
+/* CHECKED STYLES */
+.custom-checkbox-1 > input:checked ~ .box,
+/*IE8*/ .custom-checkbox-1.checked > .box
+{
+    background: #113c66;
+    color: #FFF;
+}
+    /*IE8*/
+    .custom-checkbox-1 > input:checked ~ .box > .tick,
+    .custom-checkbox-1.checked > .box > .tick
+    {
+        display: block;
+    }
+
+
+
+/*.custom-checkbox > input:active ~ .box
+            {
+                border-color: #aaa;
+                background-color: #ddd;
+            }*/
+
+.custom-checkbox-1 > input:active ~ .box
+{
+    border-color: #aaa;
+    background-color: #ddd;
+}
+
+.btn-success
+{
+    color: #fff;
+    background-color: #345643 !important;
+    border-color: #345643 !important;
+}
+
+.btn-danger
+{
+    color: #fff;
+    background-color: #a6480c !important;
+    border-color: #a6480c !important;
+}
+
+
+.bolyvia
+{
+    float: left;
+    background-color: #ec9720 !important;
+    color: #fff !important;
+    border-color: #ec9720 !important;
+}
+
+.gogo
+{
+    float: left;
+    margin-right: 5px;
+}
+
+
+/*BTN ->PDF - COPIA - EXCEL - IMPRIMIR*/
+.btn-group .btn + .btn, .btn-group .btn + .btn-group, .btn-group .btn-group + .btn, .btn-group .btn-group + .btn-group
+{
+    margin-left: 10px;
+}
+
+.box.box-primary
+{
+    border-top-color: #d2d6de;
+}
+
+.lbDisponivel
+{
+    border-radius: 3px;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 115px;
+}
+
+.btngg
+{
+    cursor: pointer;
+}
+
+.btnss
+{
+    text-align: center;
+}
+
+/*BTN - STATUS OCORRENCIA*/
+.lblStatusOcorrencia
+{
+    padding: 8px;
+    border-radius: 7%;
+    box-shadow: 0.5px 0.5px 0.5px 0.5px #888888;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.radiobtn
+{
+    vertical-align: middle;
+}
+
+.text-center
+{
+    bottom: auto;
+}

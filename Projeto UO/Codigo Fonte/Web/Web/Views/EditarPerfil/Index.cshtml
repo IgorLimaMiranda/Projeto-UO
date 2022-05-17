@@ -1,0 +1,185 @@
+﻿@model Web.ViewModel.EditarPerfilVM
+<script type="text/javascript">
+
+    function souBolivia() {
+        window.location.assign("@Url.Action("Index", "EditarPerfil")");
+    }
+
+    function validarSenha() {
+        var senha = document.getElementById("senha"),
+            confirmaSenha = document.getElementById("confirmaSenha");
+        if (senha.value != confirmaSenha.value) {
+            confirmaSenha.setCustomValidity("Senhas são direfentes");
+        } else {
+            confirmaSenha.setCustomValidity("");
+        }
+    }
+
+    function desablitarArea(i) {
+        console.log(i);
+        if (i == 1) {
+            document.getElementById("senha").disabled = true;
+            document.getElementById("confirmaSenha").disabled = true;
+            document.getElementById("btnNovaSenha").disabled = true;
+            document.getElementById("btnCancela2").disabled = true;
+        } else {
+            document.getElementById("pergunta").disabled = true;
+            document.getElementById("resposta").disabled = true;
+            document.getElementById("btn1").disabled = true;
+            document.getElementById("btnCancela1").disabled = true;
+        }
+    }
+</script>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Editar Perfil
+        </h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-default">
+                    @using (Html.BeginForm("Editar", "EditarPerfil", FormMethod.Post)) {
+                        @Html.AntiForgeryToken()
+                        <div class="box-body">
+                            <form class="form form-vertical" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-sm-4 text-center">
+                                        <div class="kv-avatar">
+                                            <div class="file-loading">
+                                                <input id="avatar-1" name="avatar-1" type="file">
+                                            </div>
+                                        </div>
+                                        <div class="kv-avatar-hint"></div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="col-sm-15">
+                                            <div class="form-group">
+                                                <label>Nome</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                    @Html.EditorFor(model => model.Usuario.Nome, new { htmlAttributes = new { @class = "form-control", @disabled = "disbled", @type = "text" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-15">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                                    @Html.EditorFor(model => model.Usuario.Email, new { htmlAttributes = new { @class = "form-control", @disabled = "disbled", @type = "text" } })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label>Pergunta Secreta</label>
+                                                <div id="nome_curso" class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-question"></i></span>
+                                                    @Html.DropDownListFor(perguntas => Model.Usuario.Pergunta, Model.ListarPerguntaUsuario(), htmlAttributes: new {
+                                                   @class = "form-control",
+                                                   @id = "pergunta",
+                                                   @onchange = "desablitarArea(1)"
+                                               })
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Resposta</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-exclamation "></i></span>
+                                                        @Html.EditorFor(model => model.Usuario.Resposta, new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "resposta", @required = "required", @onkeyup = "desablitarArea(1)" } })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="box-footer">
+                                                <button id="btnCancela1" type="button" class="btn bg-navy btn margin pull-right" onclick="location.reload()"><i class="fa fa-close"></i> Cancelar</button>
+                                                <button id="btn1" type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-check"></i> Salvar</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="kv-avatar-errors-1" class="center-block" style="width:800px;display:none"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content-header">
+        <h1>
+            Alterar Senha
+        </h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-default">
+                    @using (Html.BeginForm("EditarSenha", "EditarPerfil", FormMethod.Post)) {
+                        @Html.AntiForgeryToken()
+                        <div class="box-body ">
+                            <div class="form-group">
+                                <div class="form-group " id="nSenha">
+                                    <label>Senha Atual</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                        @Html.EditorFor(model => model.SenhaAtual, new { htmlAttributes = new { @id = "senhaAtual", @class = "form-control", @type = "password", @required = "required", @onkeyup = "desablitarArea(2);", @Value = "" } })
+                                    </div>
+                                    <label>Nova Senha</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                        @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @id = "senha", @class = "form-control", @type = "password", @required = "required", @onkeyup = "desablitarArea(2);validarSenha();", @Value = "" } })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirmar Senha</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                            @Html.EditorFor(model => model.ConfirmarSenha, new { htmlAttributes = new { @id = "confirmaSenha", @class = "form-control", @type = "password", @required = "required", @onkeyup = "desablitarArea(2);validarSenha();", @Value = "" } })
+                                        </div>
+                                        <label class="small" style="color:red">Mínimo de 8 caracteres</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <button id="btnCancela2" type="button" class="btn bg-navy btn margin pull-right" onclick="location.reload()"><i class="fa fa-close"></i> Cancelar</button>
+                                <button id="btnNovaSenha" type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-check"></i> Salvar</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<link href="~/Arquivos/bower_components/bootstrap-fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+<script src="~/Arquivos/bower_components/bootstrap-fileinput/fileinput.min.js"></script>
+<script>
+    $("#avatar-1").fileinput({
+        allowedFileExtensions: ["jpg", "png", "gif"],
+        maxImageWidth: 400,
+        maxImageHeight: 400,
+        overwriteInitial: true,
+        uploadAsync: true,
+        maxFileSize: 1500,
+        showClose: false,
+        showCaption: false,
+        browseLabel: '',
+        removeLabel: '',
+        browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+        removeIcon: '',
+        elErrorContainer: '#kv-avatar-errors-1',
+        msgErrorClass: 'alert alert-block alert-danger',
+        defaultPreviewContent: '<img src="@Model.UsuarioLogado.ImagemUsuario">',
+        layoutTemplates: { main2: '{preview} ' + '{browse}' },
+        uploadUrl: "@Url.Action("EnviarImagem", "EditarPerfil")"
+    });
+
+    $('.file-input').on('fileuploaded', function (event, data, previewId, index) {
+        window.location.reload();
+    });
+
+</script>

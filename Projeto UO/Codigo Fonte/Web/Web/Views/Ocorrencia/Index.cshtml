@@ -1,0 +1,245 @@
+﻿@model Web.ViewModel.OcorrenciaVM
+<script>
+    var data_inicio; var data_fim; var turno;
+    var sala; var tipo; var turma; var descricao;
+    var responsavel;
+    $(document).ready(function () {
+        $("tr").click(function () {
+            $(this).find('td').each(function (i) {
+                $th = $("thead th")[i];
+                switch (i) {
+                    case 0:
+                        data_inicio = $(this).html();
+                        break;
+                    case 1:
+                        data_fim = $(this).html();
+                        break;
+                    case 17:
+                        turno = $(this).html();
+                        break;
+                    case 18:
+                        sala = $(this).html();
+                        break;
+                    case 19:
+                        tipo = $(this).html();
+                        break;
+                    case 20:
+                        turma = $(this).html();
+                        break;
+                    case 21:
+                        descricao = $(this).html();
+                        break;
+                    case 22:
+                        responsavel = $(this).html();
+                        break;
+                }
+
+            });
+        })
+
+    });
+
+    function CopiarInformacoes() {
+        document.getElementById('dataEditar').value = data_inicio + " - " + data_fim;
+        document.getElementById('turnoEditar').value = turno;
+        document.getElementById('turmaEditar').value = turma;
+        document.getElementById('salaEditar').value = sala;
+        document.getElementById('responsavelEditar').value = responsavel;
+
+    }
+
+    function lucasBolivia() {
+        $("#id_focar").focus();
+    }
+</script>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Ocorrências
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box box-primary" id="caixa_filtro">
+            <div style="cursor:pointer;" class="box-header with-border" onclick="abrirCaixa()">
+                <h3 class="box-title">Pesquisa Avançada</h3>
+                <div class="box-tools pull-right">
+                    <button id="toggle-button" type="button" class="btn btn-box-tool" data-widget="toggle" onclick="LimparPartialView()">
+                        <i class="fa fa-angle-down fa-2x"></i>
+                    </button>
+                </div>
+            </div>
+            @using(Html.BeginForm("Pesquisar", "Ocorrencia", FormMethod.Get)) {
+                <div class="box-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Intervalo</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.EditorFor(model => model.IntervaloOcorrencia, new {
+                    htmlAttributes = new {
+                        @id = "data_ranger",
+                        @class = "form-control pull-right",
+                        @type = "text"
+                    }
+                })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <div id="status" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                @Html.DropDownListFor(model => model.Atendimento.Status, Model.ListarStatus(),
+                "...", htmlAttributes: new {
+                    @id = "cb-status",
+                    @class = "form-control"
+                })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Listar Por:
+                                <button type="button" class="btn btn-box-tool ajuste-izinho" data-toggle="tooltip" title="ACERTOS, busca por resultados mais precisos. RELEVÂNCIA, busca por qualquer item relacionado à sua pesquisa." data-widget="chat-pane-toggle"> <big><i class="fa fa-info-circle"></i></big></button>
+                            </label>
+                            <div id="tipoDePesquisa" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                @Html.DropDownListFor(
+                                                                lista => lista.TipoDePesquisa, Model.ListarTipoDePesquisa(),
+                                                                  htmlAttributes: new {
+                                                                      @id = "tipoDePesquisa",
+                                                                      @class = "form-control"
+
+                                                                  })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Setor</label>
+                            <div id="setor" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                @Html.DropDownListFor(model => model.Chamado.IdSetor, Model.ListarSetores(),
+                               "...", htmlAttributes: new {
+                                   @id = "cb-setor",
+                                   @class = "form-control"
+                               })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Usuário</label>
+                            <div id="usuario" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                @Html.DropDownListFor(model => model.Chamado.CpfUsuario, Model.ListarUsuarios(),
+                               "...", htmlAttributes: new {
+                                   @id = "cb-usuario",
+                                   @class = "form-control"
+                               })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <label>
+                            <button type="submit" class="btn bg-orange btn margin pull-right btn-alinhamtento-button"><i class="fa fa-search"></i> Buscar</button>
+                            <button type="reset" class="btn bg-navy btn margin pull-right btn-alinhamtento-button"><i class="fa fa-eraser"></i> Limpar Campos</button>
+                        </label>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Registros</h3>
+                @if (Model.IsPesquisa) {<a href="@Url.Action("Index", "Ocorrencia")" data-toggle="tooltip" title="Limpar resultados da pesquisa" class="button clearfilter pull-right"><img src="~/Arquivos/images/icons/refresh.png" class="centerfilter" width="18"></a>}
+                else {<a title="Limpar resultados da pesquisa" data-toggle="tooltip" disabled="disabled" style="background-color:gray;" class="button clearfilter pull-right"><img src="~/Arquivos/images/icons/refresh.png" class="centerfilter" width="18"></a>}
+                <button type="button" class="button btnBolivia pull-right" onclick="PartialViewCadastrarOcorrencia('@Url.Action("Cadastrar", "Ocorrencia")')">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <div class="box-body">
+                <table id="tab_cadastro_ocorrencia" class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Código</th>
+                            <th>Setor</th>
+                            <th>Incidente</th>
+                            <th>Patrimônio</th>
+                            <th>Usuário(a)</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(int i = 0; i < Model.Chamados.Count; i++) {
+                            <tr>
+                                <td>@Html.DisplayFor(model => Model.Chamados[i].HoraData)</td>
+                                <td>@Html.DisplayFor(model => Model.Chamados[i].Id)</td>
+                                <td>@Html.DisplayFor(model => Model.Chamados[i].Setor.Nome)</td>
+                                <td>@Html.DisplayFor(model => Model.Chamados[i].IncidenteRecorrente.Descricao)</td>
+                                <td>@Html.DisplayFor(model => Model.Chamados[i].Patrimonio)</td>
+                                <td>@Html.DisplayFor(model => Model.Chamados[i].Usuario.Nome)</td>
+                                <td>@Html.DisplayFor(model => Model.StatusChamado[Model.Chamados[i].Id])</td>
+                                <td>
+                                    <button type="button" @Html.Raw(Model.PermissaoBotaoEditar[Model.Chamados[i].Id]) class="btn btn-social-icon btn-@Html.Raw(Model.LayoutPermissaoBotaoEditar[Model.Chamados[i].Id])" onclick=" PopupFormEditarOcorrencia('@Url.Action("EditarOcorrencia", "Ocorrencia", Model.Chamados[i])');"><i class="fa fa-edit"></i></button>
+                                    <button type="button" @Html.Raw(Model.PermissaoBotaoExcluir[Model.Chamados[i].Id]) class="btn btn-social-icon btn-@Html.Raw(Model.LayoutPermissaoBotaoExcluir[Model.Chamados[i].Id])" onclick="PopupFormExcluirOcorrencia('@Url.Action("ExcluirOcorrencia", "Ocorrencia", Model.Chamados[i])')"><i class="fa fa-trash"></i></button>
+                                    <button type="button" class="btn btn-social-icon btn-info" onclick="PopupFormVisualizarOcorrencia('@Url.Action("VisualizarOcorrencia", "Ocorrencia", Model.Chamados[i])')"><i class="fa fa-eye"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Data</th>
+                            <th>Código</th>
+                            <th>Setor</th>
+                            <th>Incidente</th>
+                            <th>Patrimônio</th>
+                            <th>Usuário(a)</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div id="cadastro" />
+    </section>
+
+</div>
+<script>
+    function checkStatus() {
+        var div_comentario = document.getElementById('comentario');
+        var txt_area_comentario = document.getElementById('comentario_descricao');
+        div_comentario.style.display = "block";
+        txt_area_comentario.required = true;
+    }
+
+    function changeBtnState(text) {
+        if (text.length > 0)
+            document.getElementById('btn-salvar').disabled = false;
+        else
+            document.getElementById('btn-salvar').disabled = true;
+    }
+
+    function verificarExibicaoStatus() {
+        var div_status = document.getElementById('div-status');
+        if (div_status.display == 'none') {
+
+        }
+    }
+    function verificarPermissoesDeCampos(text) {
+        if (text === 'disabled') {
+            document.getElementById('patrimonio_chamado').disabled = true;
+            document.getElementById('combo_box_incidentes').disabled = true;
+            document.getElementById('combo_box_setores').disabled = true;
+            document.getElementById('descricao_chamado').disabled = true;
+
+            document.getElementById('btn-salvar').disabled = true;
+        }
+    }
+</script>

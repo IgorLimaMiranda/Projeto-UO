@@ -1,0 +1,84 @@
+﻿@model Backend.Model.Usuario
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    var mensagem = TempData["Mensagem"] ?? string.Empty;
+    var tipo = TempData["Tipo"] ?? string.Empty;
+    var titulo = TempData["Titulo"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    if ('@mensagem') {
+        toastr.@tipo ('@mensagem', '@titulo', {
+            "progressBar": true,
+            "closeButton": true,
+            "showMethod": "slideDown",
+            "hideMethod": "slideUp",
+            "timeOut": 5000
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    function formatar(mascara, documento) {
+        console.log(documento.value.length);
+        documento.value = documento.value.replace(/\D/g, "")
+        documento.value = documento.value.replace(/(\d{3})(\d)/, "$1.$2")
+        documento.value = documento.value.replace(/(\d{3})(\d)/, "$1.$2")
+        documento.value = documento.value.replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+        if (documento.value.length >= 14) {
+            $.get('@Url.Action("Index", "Recuperar")').done(function (response) { });
+        }
+    }
+
+</script>
+
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <section class="flexbox-container p-3">
+                <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1 box-shadow-2 p-0">
+                    <div class="card border-grey border-lighten-3 px-0 py-3 m-0">
+                        <div class="card-header no-border">
+                            <div class="card-title text-xs-center">
+                                <div class="p-1"><img src="~/Arquivos/images/logo/Senac.png" alt="Senac Logo"></div>
+                            </div>
+                            <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Recuperação de Senha</span></h6>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                @using (Html.BeginForm("RecuperarCpf", "Recuperar", FormMethod.Post)) {
+                                    @Html.AntiForgeryToken()
+                                    <fieldset class="form-group position-relative has-icon-left mb-0">
+                                        @Html.EditorFor(model => model.Cpf, new {
+                                            htmlAttributes = new {
+                                                @id = "user-name",
+                                                @type = "text",
+                                                @class = "form-control form-control-lg input-lg",
+                                                @placeholder = "CPF",
+                                                @maxlength = "14",
+                                                @minlength = "14",
+                                                @onkeyup = "formatar('###.###.###-##', this)",
+                                                @required = "required",
+                                            }
+                                        })
+
+                                        <div class="form-control-position">
+                                            <i class="icon-head"></i>
+                                        </div>
+                                    </fieldset>
+                                    <br />
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i>Verificar Usuário</button>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-footer no-border pb-0">
+                            <p class="float-sm-right text-xs-center"><a href="@Url.Action("Index", "Login")" class="card-link">Voltar para Login?</a></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

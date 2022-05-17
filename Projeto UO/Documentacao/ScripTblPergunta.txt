@@ -1,0 +1,14 @@
+Insert into tbl_pergunta (PE_ID,PE_PERGUNTA,PE_TIPO_PERGUNTA) VALUES
+(1,'Dominio Do Tema','Mini-Aula'),
+(2,'Domíno Didático-Pedagógico','Mini-Aula'),
+(3,'Linguagem Não Verbal','Mini-Aula'),
+(4,'Linguagem Verbal','Mini-Aula'),
+(5,'Orientação Para Resultados','Entrevista'),
+(6,'Visão Sistêmica','Entrevista'),
+(7,'Gestão Estrategica','Entrevista'),
+(8,'Operacionalização Da Ação Educacional','Entrevista'),
+(9,'Relacionamento Interpessoal','Entrevista'),
+(10,'Espirito De Equipe','Entrevista'),
+(11,'Comunicação','Entrevista'),
+(12,'Organização','Entrevista'),
+(13,'Iniciativa','Entrevista');

@@ -1,0 +1,72 @@
+﻿@model Web.ViewModel.OcorrenciaVM
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-default">
+            <div class="box-header">
+                <h3 class="box-title">Cadastrar</h3>
+            </div>
+            @using (Html.BeginForm("Cadastrar", "Ocorrencia", FormMethod.Post)) {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Patrimônio</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                            @Html.EditorFor(model => model.Chamado.Patrimonio, new {
+                                htmlAttributes = new {
+                                    @id = "chamado_patrimonio",
+                                    @type = "text",
+                                    @class = "form-control",
+                                    @placeholder = "...",
+                                    @maxlength = "150",
+                                    @required = "required"
+                                }
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Incidente</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa  fa-warning"></i></span>
+                            @Html.DropDownListFor(
+                                usuarios => Model.Chamado.IdIncidenteRecorrente, Model.ListarIncidentesRecorrentes(), "...",
+                                htmlAttributes: new {
+                                    @id = "combo_box_incidentes",
+                                    @class = "form-control",
+                                    @required = "required"
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Local</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa  fa-map-marker"></i></span>
+                            @Html.DropDownListFor(
+                                usuarios => Model.Chamado.IdSetor, Model.ListarSetores(), "...",
+                                htmlAttributes: new {
+                                    @id = "combo_box_setores",
+                                    @class = "form-control",
+                                    @required = "required"
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        @Html.TextAreaFor(model => model.Chamado.Descricao, new {
+                            @id = "descricao_chamado",
+                            @class = "form-control",
+                            @placeholder = "...",
+                            @maxlength = "500",
+                            @required = "required",
+                            @rows = "3"
+                        })
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="button" class="btn bg-navy btn margin pull-right" onclick="LimparPartialView()"><i class="fa fa-close"></i> Cancelar</button>
+                    <button type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-check"></i> Salvar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

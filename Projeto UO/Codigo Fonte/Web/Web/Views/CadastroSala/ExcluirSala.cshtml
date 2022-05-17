@@ -1,0 +1,16 @@
+﻿@model Web.ViewModel.CadastroSalaVM
+            @using (Html.BeginForm("Excluir", "CadastroSala", FormMethod.Post)) {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Deseja realmente excluir <label>@Html.DisplayTextFor(model => model.Sala.Nome)</label>?</h3>
+                        @Html.HiddenFor(model => model.Sala.Id)
+                    </div>
+                    <div class="box-footer">
+                        <div class="text-center">
+                            <button type="submit" class="btn bg-orange btn margin"><i class="fa fa-check"></i> Excluir</button>
+                            <button type="button" class="btn bg-navy btn margin" onclick="CancelarWindowsForms()"><i class="fa fa-close"></i> Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            }

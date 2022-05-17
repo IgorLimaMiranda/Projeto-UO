@@ -1,0 +1,132 @@
+﻿@model Web.ViewModel.CadastroUsuarioVM
+<section class="content">
+    <iframe hidden onload="eixoVisivel()"></iframe>
+    <div class="row">        
+        <div class="box box-default"> 
+            <div class="box-header">
+                <h3 class="box-title">Editar</h3>
+            </div>
+            @using (Html.BeginForm("Alterar", "CadastroUsuario", FormMethod.Post)) {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>CPF</label>
+                        <div id="nome_cpf" class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            @Html.HiddenFor(model => model.Usuario.Cpf)
+                            @Html.EditorFor(model => model.Usuario.Cpf, new {
+                                htmlAttributes = new {
+                                    @id = "usuario_cpf",
+                                    @type = "text",
+                                    @class = "form-control",
+                                    @placeholder = "...",
+                                    @Disabled = "disabled"
+                                }
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <div id="nome_completo" class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            @Html.EditorFor(model => model.Usuario.Nome, new {
+                                htmlAttributes = new {
+                                    @id = "usuario_nome",
+                                    @type = "text",
+                                    @class = "form-control",
+                                    @placeholder = "...",
+                                    @maxlength = "100",
+                                    @Required = "required"
+                                }
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div id="nome_email" class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            @Html.EditorFor(model => model.Usuario.Email, new {
+                                htmlAttributes = new {
+                                    @id = "usuario_email",
+                                    @type = "email",
+                                    @class = "form-control",
+                                    @placeholder = "...",
+                                    @maxlength = "150",
+                                    @Required = "required"
+                                }
+                            })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="nome_senha" class="form-group">
+                                <label>Senha</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    @Html.EditorFor(model => model.Usuario.Senha, new {
+                                        htmlAttributes = new {
+                                            @id = "usuario_senha",
+                                            @type = "password",
+                                            @class = "form-control",
+                                            @placeholder = "...",
+                                            @maxlength = "16",
+                                            @minlength = "8",
+                                            @Required = "required",
+                                            @onkeyup = "validarSenha()"
+                                        }
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="nome_confirmar_senha" class="form-group">
+                                <label>Confirmar Senha</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    @Html.EditorFor(model => model.Usuario.Senha, new {
+                                        htmlAttributes = new {
+                                            @id = "usuario_confirmar_senha",
+                                            @type = "password",
+                                            @class = "form-control",
+                                            @placeholder = "...",
+                                            @maxlength = "16",
+                                            @minlength = "8",
+                                            @Required = "required",
+                                            @onkeyup = "validarSenha()"
+                                        }
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Cargo do Usuário</label>
+                        @Html.DropDownListFor(
+                        usuarios => Model.Usuario.TipoUsuario, Model.ListarTiposUsuario(), "...", htmlAttributes: new {
+                            @id = "cb_tipo_usuario",
+                            @class = "form-control",
+                            @onchange = "eixoVisivel()",
+                            @required = "required"
+                        })
+                    </div>
+                    <div class="form-group" id="eixo_professor_visivel" style="display:none;">
+                        <label>Eixo Educacional</label>
+                        @Html.DropDownListFor(
+                        usuarios => Model.Usuario.EixoEducacional, Model.ListarEixoEducacionalProfessor(), "...", htmlAttributes: new {
+                            @id = "cb_eixo_educacional",
+                            @class = "form-control"
+                        })
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="box-footer">
+                        <div class="text-center">
+                            <button type="button" class="btn bg-navy btn margin pull-right " onclick="LimparPartialView()"><i class="fa fa-close"></i> Cancelar</button>
+                            <button type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-check"></i> Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

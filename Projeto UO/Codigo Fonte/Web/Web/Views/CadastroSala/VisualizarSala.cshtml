@@ -1,0 +1,97 @@
+﻿@model Web.ViewModel.CadastroSalaVM
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-body">
+                <div class="form-group">
+                    <label>Numero</label>
+                    <div id="sala_numero" class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span>
+                        @Html.EditorFor(model => model.Sala.Numero, new {
+                            htmlAttributes = new {
+                                @class = "form-control",
+                                @readonly = "readonly"
+                            },autofocus = "autofocus"
+                        })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Andar</label>
+                    <div id="sala_andar" class="input-group">
+                        <span class="input-group-addon"><i class="	fa fa-list-ol"></i></span>
+                        @Html.EditorFor(model => model.Sala.Andar, new {
+                       htmlAttributes = new {
+                           @class = "form-control",
+                           @disabled = "disabled"
+                           
+                       }
+                   })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Capacidade</label>
+                    <div id="sala_capacidade" class="input-group">
+                        <span class="input-group-addon"><i class="	fa fa-group"></i></span>
+                        @Html.EditorFor(model => model.Sala.Capacidade, new {
+                            htmlAttributes = new {
+                                @class = "form-control",
+                                @disabled = "disabled"
+                            }
+                        })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Sala</label>
+                    <div id="sala_" class="input-group">
+                        <span class="input-group-addon"><i class="	fa fa-building"></i></span>
+                        @Html.EditorFor(model => model.Sala.Tipo, new {
+                            htmlAttributes = new {
+                                @class = "form-control",
+                                @disabled = "disabled"
+                            }
+                        })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <div id="sala_descricao" class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                        @Html.EditorFor(usuarios => Model.Sala.Descricao, new {
+                            htmlAttributes = new {
+                                @class = "form-control",
+                                @disabled = "disabled"
+                            }
+                        })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Registros</h3>
+        </div>
+        <table class="table table-bordered table-striped" id="tab_visualizar_sala" onload="carregar()">
+            <thead>
+                <tr>
+                    <th>Recurso</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                @foreach (var equipamento in Model.EquipamentosSetor) {
+                    <tr>
+                        <td>@Html.DisplayFor(model => equipamento.Equipamento.Descricao)</td>
+                        <td>@Html.DisplayFor(model => equipamento.Quantidade)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="text-center">
+            <button type="button" class="btn bg-navy btn margin" onclick="CancelarWindowsForms()"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</button>
+        </div>
+    </div>
+</section>
+

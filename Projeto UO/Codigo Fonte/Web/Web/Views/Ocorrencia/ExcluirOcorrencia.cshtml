@@ -1,0 +1,17 @@
+﻿@model Web.ViewModel.OcorrenciaVM
+
+@using (Html.BeginForm("Excluir", "Ocorrencia", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
+                <div class="box-body">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Deseja realmente excluir essa Ocorrência?</h3>
+                        @Html.HiddenFor(model => model.Chamado.Id)
+                    </div>
+                    <div class="box-footer">
+                        <div class="text-center">
+                            <button type="button" class="btn bg-navy btn margin" onclick="CancelarWindowsForms()"><i class="fa fa-close"></i> Cancelar</button>
+                            <button type="submit" class="btn bg-orange btn margin"><i class="fa fa-check"></i> Excluir</button>
+                        </div>
+                    </div>
+                </div>
+}

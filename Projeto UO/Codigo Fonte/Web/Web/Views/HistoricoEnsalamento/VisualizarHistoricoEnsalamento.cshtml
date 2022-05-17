@@ -1,0 +1,44 @@
+﻿@model Web.ViewModel.HistoricoEnsalamentoVM
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary direct-chat direct-chat-danger">
+            <div class="box-body">
+                <div class="scroll-box">
+                    <blockquote>
+                        <p>Intervalo:</p>
+                        <small>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.HistoricoEnsalamento.DataInicio)) - @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.HistoricoEnsalamento.DataFim))</small>
+                    </blockquote>
+                    <blockquote>
+                        <p>Sala:</p>
+                        <small>@Html.DisplayFor(model => model.HistoricoEnsalamento.Sala)</small>
+                    </blockquote>
+                    <blockquote>
+                        <p>Turma:</p>
+                        <small>@Html.DisplayFor(model => model.HistoricoEnsalamento.Turma)</small>
+                    </blockquote>
+                    <blockquote>
+                        <p>Turno:</p>
+                        <small>@Html.DisplayFor(model => model.HistoricoEnsalamento.Turno)</small>
+                    </blockquote>
+                    <blockquote>
+                        <p>Ação:</p>
+                        <small>@Html.DisplayFor(model => model.HistoricoEnsalamento.Acao)</small>
+                    </blockquote>
+                    <blockquote>
+                        <p>Usuário</p>
+                        <small>@Html.DisplayFor(model => model.HistoricoEnsalamento.Usuario)</small>
+                    </blockquote>
+                    <blockquote>
+                        <p>Professor:</p>
+                        <small>@Html.DisplayFor(model => model.HistoricoEnsalamento.Ocupante)</small>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box-footer">
+    <div class="text-center">
+        <button type="submit" class="btn bg-navy btn margin" onclick="CancelarWindowsForms()"><i class="fa fa-arrow-left"></i> Voltar</button>
+    </div>
+</div>

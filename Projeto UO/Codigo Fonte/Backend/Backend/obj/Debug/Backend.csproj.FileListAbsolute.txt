@@ -1,0 +1,12 @@
+C:\Projeto UO\Codigo Fonte\Backend\Backend\bin\Debug\Backend.exe.config
+C:\Projeto UO\Codigo Fonte\Backend\Backend\bin\Debug\Backend.exe
+C:\Projeto UO\Codigo Fonte\Backend\Backend\bin\Debug\Backend.pdb
+C:\Projeto UO\Codigo Fonte\Backend\Backend\bin\Debug\EntityFramework.dll
+C:\Projeto UO\Codigo Fonte\Backend\Backend\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projeto UO\Codigo Fonte\Backend\Backend\bin\Debug\EntityFramework.xml
+C:\Projeto UO\Codigo Fonte\Backend\Backend\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projeto UO\Codigo Fonte\Backend\Backend\obj\Debug\Backend.csprojAssemblyReference.cache
+C:\Projeto UO\Codigo Fonte\Backend\Backend\obj\Debug\Backend.csproj.CoreCompileInputs.cache
+C:\Projeto UO\Codigo Fonte\Backend\Backend\obj\Debug\Backend.csproj.CopyComplete
+C:\Projeto UO\Codigo Fonte\Backend\Backend\obj\Debug\Backend.exe
+C:\Projeto UO\Codigo Fonte\Backend\Backend\obj\Debug\Backend.pdb

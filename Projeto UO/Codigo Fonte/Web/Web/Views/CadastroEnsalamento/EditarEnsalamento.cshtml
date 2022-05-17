@@ -1,0 +1,282 @@
+﻿@model Web.ViewModel.EnsalamentoVM
+<div class="box box-header">
+    <div class="box-header">
+        <h3 class="box-title"><strong> Ensalamento abaixo será editado: </strong></h3>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered table-striped table-responsive">
+            @Html.HiddenFor(model => model.Ensalamento.Id, new { @id = "idEnsalamento" })
+            <thead>
+                <tr>
+                    <th>Intervalo do Ensalamento</th>
+                    <th>Periodicidade</th>
+                    <th>Turno</th>
+                    <th>Sala</th>
+                    <th>Turma</th>
+                    <th>Ocupante</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(model => Model.Ensalamento.Data) - @Html.DisplayFor(model => Model.Ensalamento.DataFim)</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td class="espaco"><label>D</label></td>
+                                <td class="espaco"><label>S</label></td>
+                                <td class="espaco"><label>T</label></td>
+                                <td class="espaco"><label>Q</label></td>
+                                <td class="espaco"><label>Q</label></td>
+                                <td class="espaco"><label>S</label></td>
+                                <td class="espaco"><label>S</label></td>
+                            </tr>
+                            <tr>
+                                <td>@Html.CheckBoxFor(model => Model.Periodicidade[0], new { @disabled = "disabled", @title = "Domingo" })</td>
+                                <td>@Html.CheckBoxFor(model => Model.Periodicidade[1], new { @disabled = "disabled", @title = "Segunda" })</td>
+                                <td>@Html.CheckBoxFor(model => Model.Periodicidade[2], new { @disabled = "disabled", @title = "Terça" })</td>
+                                <td>@Html.CheckBoxFor(model => Model.Periodicidade[3], new { @disabled = "disabled", @title = "Quarta" })</td>
+                                <td>@Html.CheckBoxFor(model => Model.Periodicidade[4], new { @disabled = "disabled", @title = "Quinta" })</td>
+                                <td>@Html.CheckBoxFor(model => Model.Periodicidade[5], new { @disabled = "disabled", @title = "Sexta" })</td>
+                                <td>@Html.CheckBoxFor(model => Model.Periodicidade[6], new { @disabled = "disabled", @title = "Sábado" })</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>@Html.DisplayFor(model => Model.Turnos[(Model.Ensalamento.Periodo - 1)])</td>
+                    <td nowrap title="@Html.DisplayFor(model => Model.Ensalamento.Sala.Tipo) - @Html.DisplayFor(model => Model.Ensalamento.Sala.Descricao)">
+                        @Html.DisplayFor(model => Model.Ensalamento.Sala.Numero) - @Html.DisplayFor(model => model.Ensalamento.Sala.Andar)
+                    </td>
+                    <td nowrap title="@Html.DisplayFor(model => Model.Ensalamento.Turma.Curso.Descricao) @Html.DisplayFor(model => Model.Ensalamento.Turma.Ano)">
+                        @Html.DisplayFor(model => Model.Ensalamento.Turma.Id) / @Html.DisplayFor(model => Model.Ensalamento.Turma.Ano)
+                    </td>
+                    <td>@Html.DisplayFor(model => Model.Ensalamento.Ocupante)</td>
+                </tr>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<div class="box box-danger" id="caixa_adicionar_parcial">
+    <div style="cursor:pointer;" class="box-header with-border" data-widget="toggle" onclick="alterarAdicionar()" title="Adicionar um novo intervalo">
+        <h3 class="box-title text-red"><strong>Alteração do ensalamento:</strong></h3>
+        <div class="box-tools pull-right">
+            <button id="toggle-button-editar" type="button" class="btn btn-box-tool" data-widget="toggle" onclick="LimparPartialView()">
+                <i class="fa fa-angle-down fa-2x"></i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Intervalo</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.EditorFor(model => model.IntervaloEnsalamento, new {
+                                    htmlAttributes = new {
+                                        @id = "reservationEditar",
+                                        @class = "form-control pull-right"
+                                    }
+                                })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Turno</label>
+                        <div id="turno" class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                            @Html.DropDownListFor(lista => lista.Ensalamento.Periodo, Model.ListarTurnos(),
+                                                                                                        htmlAttributes: new {
+                                                                                                            @id = "IdListaPeriodoEditar",
+                                                                                                            @class = "form-control"
+                                                                                                        })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Periodicidade</label>
+                        <div id="question2" class="multiChoice">
+                            <span class="custom-checkbox-1">
+                                @Html.CheckBoxFor(model => Model.Periodicidade[0], new { @id = "domingoEditar" })
+                                <span class="box">Dom</span>
+                            </span>
+                            <span class="custom-checkbox-1" id="q2Blue">
+                                @Html.CheckBoxFor(model => Model.Periodicidade[1], new { @id = "segundaEditar" })
+                                <span class="box">Seg</span>
+                            </span>
+
+                            <span class="custom-checkbox-1" id="q2Red">
+                                @Html.CheckBoxFor(model => Model.Periodicidade[2], new { @id = "tercaEditar" })
+                                <span class="box">Ter</span>
+                            </span>
+
+                            <span class="custom-checkbox-1" id="multiChoice">
+                                @Html.CheckBoxFor(model => Model.Periodicidade[3], new { @id = "quartaEditar" })
+                                <span class="box">Qua</span>
+                            </span>
+                            <span class="custom-checkbox-1" id="multiChoice">
+                                @Html.CheckBoxFor(model => Model.Periodicidade[4], new { @id = "quintaEditar" })
+                                <span class="box">Qui</span>
+                            </span>
+                            <span class="custom-checkbox-1" id="multiChoice">
+                                @Html.CheckBoxFor(model => Model.Periodicidade[5], new { @id = "sextaEditar" })
+                                <span class="box">Sex</span>
+                            </span>
+                            <span class="custom-checkbox-1" id="multiChoice">
+                                @Html.CheckBoxFor(model => Model.Periodicidade[6], new { @id = "sabadoEditar" })
+                                <span class="box">Sáb</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Turma</label>
+                        <div id="turma" class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-group"></i></span>
+                            @Html.DropDownListFor(lista => lista.ChaveTurma, Model.ListarTurmas(),
+                                                   htmlAttributes: new {
+                                                       @id = "IdListaTurmasEditar",
+                                                       @class = "form-control"
+
+                                                   })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Sala</label>
+                        <div id="sala" class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                            @Html.DropDownListFor(lista => lista.Ensalamento.IdSala, Model.ListarSalas(),
+                                                   htmlAttributes: new {
+                                                       @id = "IdListaSalasEditar",
+                                                       @class = "form-control"
+
+                                                   })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ocupante</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            @Html.EditorFor(model => model.Ensalamento.Ocupante, new {
+                                htmlAttributes = new {
+                                    @id = "ocupanteEditar",
+                                    @class = "form-control pull-right",
+                                    @type = "text",
+                                    @placeholder = "Digite um Ocupante"
+                                }
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <div class="text-center">
+            <button type="button" onclick="EnviarEdicaoParcial()" class="btn bg-orange btn margin pull-right"><i class="fa fa-plus"></i> Adicionar período</button>
+        </div>
+    </div>
+</div>
+<div class="box" id="tabela_novos_editados">
+    <div class="box-header">
+        <h3 class="box-title"><strong> Novos períodos de Ensalamento gerados para validação: </strong></h3>
+        <div class="box-body">
+            <table id="tableParcial" class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Intervalo</th>
+                        <th>Turno</th>
+                        <th>Peridiocidade</th>
+                        <th>Sala</th>
+                        <th>Turma</th>
+                        <th>Ocupante</th>
+                        <th>Ação</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="box-footer">
+        <div class="text-center">
+            @*<button type="button" class="btn bg-navy btn margin pull-right" onclick="CancelarWindowsForms()"><i class="fa fa-close"></i> Cancelar edição</button>*@
+            <button type="submit" class="btn bg-orange btn margin pull-right" onclick="Validar()"><i class="fa fa-check"></i> Validar ensalamentos</button>
+        </div>
+    </div>
+</div>
+<div class="box" id="tabela_validados">
+    <div class="box-header">
+        <h3 class="box-title"><strong> Ensalamentos que serão adicionados: </strong></h3>
+        <div class="box-body">
+            <table id="tableValidados" class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Intervalo</th>
+                        <th>Turno</th>
+                        <th>Peridiocidade</th>
+                        <th>Sala</th>
+                        <th>Turma</th>
+                        <th>Ocupante</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-validados"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="box-footer">
+        <div class="text-center">
+            <button type="button" class="btn bg-navy btn margin pull-right" onclick="continuarEditando()"><i class="fa fa-close"></i> Continuar editando</button>
+            <button type="submit" class="btn bg-orange btn margin pull-right" onclick="Salvar()"><i class="fa fa-check"></i> Confirmar</button>
+        </div>
+    </div>
+</div>
+<div class="box-footer text-center">
+    <button type="button" class="btn bg-navy btn margin pull-right" onclick="CancelarWindowsForms()"><i class="fa fa-close"></i> Cancelar edição</button>
+</div>
+<script type="text/javascript" src="~/Arquivos/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Arquivos/bower_components/bootstrap-daterangepicker/daterangepicker.css" />
+<script type="text/javascript">
+    $(function () {
+
+
+        $('#reservationEditar').daterangepicker();
+
+        $('#tableParcial').DataTable({
+            ordering: true,
+            "dom": 't',
+            "aoColumns": [
+                { "sType": "date-br" },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ]
+        });
+        $('#tableValidados').DataTable({
+            ordering: true,
+            "dom": 't',
+            "aoColumns": [
+                { "sType": "date-br" },
+                null,
+                null,
+                null,
+                null,
+                null
+            ]
+        });
+
+        $('#validar_parcial').boxWidget('collapse');
+        $('#tabela_novos_editados').boxWidget('collapse');
+        $('#tabela_validados').boxWidget('collapse');
+    });
+</script>

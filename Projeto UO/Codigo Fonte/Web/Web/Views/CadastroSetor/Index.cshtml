@@ -1,0 +1,55 @@
+﻿@model Web.ViewModel.CadastroSetorVM
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Cadastro de Setor
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Registros</h3>
+                <button type="button" class="button btnBolivia pull-right" onclick="PartialViewCadastrarSetor('@Url.Action("Cadastrar", "CadastroSetor")')">
+                    <i class="fa fa-plus">
+                    </i>
+                </button>
+            </div>
+            <div class="box-body">
+                <table id="tab_cadastro_setor" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th hidden>Id</th>
+                            <th>Nome do Setor</th>
+                            <th>Andar</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var setor in Model.Setores) {
+                            <tr>
+                                <td hidden>@Html.HiddenFor(model => setor.Id)</td>
+                                <td>@Html.DisplayFor(model => setor.Nome)</td>
+                                <td>@Html.DisplayFor(model => setor.Andar)</td>
+                                <td>
+                                    <center>
+                                        <button type="button" class="btn btn-social-icon btn-primary" onclick="PopupFormEditarSetor('@Url.Action("EditarSetor", "CadastroSetor", setor)')"><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-warning" onclick="PopupFormExcluirSetor('@Url.Action("ExcluirSetor","CadastroSetor", setor)')"><i class="fa fa-trash"></i></button>
+                                    </center>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Nome do Setor</th>
+                            <th>Andar</th>
+                            <th>Ação</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div id="cadastro" />
+    </section>
+</div>

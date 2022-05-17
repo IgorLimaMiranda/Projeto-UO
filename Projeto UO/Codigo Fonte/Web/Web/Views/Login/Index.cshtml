@@ -1,0 +1,106 @@
+﻿@model Backend.Model.Usuario
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    var mensagem = TempData["Mensagem"] ?? string.Empty;
+    var tipo = TempData["Tipo"] ?? string.Empty;
+    var titulo = TempData["Titulo"] ?? string.Empty;
+}
+
+<script>
+    $(document).ready(function () {
+        $('#user-name', this).focus();
+    });
+
+    if ('@mensagem') {
+        toastr.@tipo ('@mensagem', '@titulo', {
+            "progressBar": true,
+            "closeButton": true,
+            "showMethod": "slideDown",
+            "hideMethod": "slideUp",
+            "timeOut": 5000
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    function formatar(mascara, documento) {
+        //Remove tudo o que não é dígito
+        documento.value = documento.value.replace(/\D/g, "")
+        documento.value = documento.value.replace(/(\d{3})(\d)/, "$1.$2")
+
+        //Coloca um ponto entre o terceiro e o quarto dígitos
+        //de novo (para o segundo bloco de números)
+        documento.value = documento.value.replace(/(\d{3})(\d)/, "$1.$2")
+
+        //Coloca um hífen entre o terceiro e o quarto dígitos
+        documento.value = documento.value.replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+    }
+</script>
+
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-body">
+            <div class="testecerto">
+                <section class="flexbox-container p-3">
+                    <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1 box-shadow-2 p-0">
+                        <div class="card border-grey border-lighten-3 px-0 py-3 m-0">
+                            <div class="card-header no-border">
+                                <div class="card-title text-xs-center">
+                                    <div class="p-1"><img class="img-fluid center-block" src="~/Arquivos/images/logo/Senac.png" alt="Senac Logo"></div>
+                                </div>
+                                <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Faça o login</span></h6>
+                            </div>
+                            <div class="card-body collapse in">
+                                <div class="card-block">
+                                    @using(Html.BeginForm("Index", "Login", FormMethod.Post)) {
+                                        <fieldset class="form-group position-relative has-icon-left mb-0">
+                                            @Html.EditorFor(model => model.Cpf, new {
+                                           htmlAttributes = new {
+                                               @id = "user-name",
+                                               @type = "text",
+                                               @class = "form-control form-control-lg input-lg",
+                                               @placeholder = "CPF",
+                                               @maxlength = "14",
+                                               @minlength = "14",
+                                               @onkeyup = "formatar('###.###.###-##', this)",
+                                               @Required = "required",
+                                               @autofocus = "autofocus"
+                                           }
+                                       })
+                                            <div class="form-control-position">
+                                                <i class="icon-head"></i>
+                                            </div>
+                                        </fieldset>
+                                        <br>
+                                        <fieldset class="form-group position-relative has-icon-left">
+                                            @Html.EditorFor(model => model.Senha, new {
+                                           htmlAttributes = new {
+                                               @id = "user-password",
+                                               @type = "password",
+                                               @class = "form-control form-control-lg input-lg",
+                                               @placeholder = "Senha",
+                                               @maxlength = "150",
+                                               @Required = "required"
+                                           }
+                                       })
+                                            <div class="form-control-position">
+                                                <i class="icon-key3"></i>
+                                            </div>
+                                        </fieldset>
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Login</button>
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-footer no-border pb-0">
+                                <p class="float-sm-right text-xs-center"><a href="@Url.Action("RecuperarCpf", "Recuperar")" class="card-link">Esqueceu a senha?</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

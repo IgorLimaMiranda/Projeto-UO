@@ -1,0 +1,181 @@
+﻿<link rel="stylesheet" href="~/Arquivos/Ultilitario.css">
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Pesquisar Ocorrência
+        </h1>
+    </section>
+
+    <!-- Include Required Prerequisites -->
+    <script type="text/javascript" src="~/Arquivos/bower_components/calendario-sistema/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Arquivos/bower_components/calendario-sistema/js/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Arquivos/bower_components/calendario-sistema/css/bootstrap.css" />
+
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="~/Arquivos/bower_components/calendario-sistema/js/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Arquivos/bower_components/calendario-sistema/css/daterangepicker.js" />
+
+
+    <section class="content">
+        <div class="box box-default">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label>Intervalo</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" name="datefilter" class="form-control pull-right">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <div id="status" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                        <select class="form-control">
+                                            <option>...</option>
+                                            <option>Disponível</option>
+                                            <option>Ocupado</option>
+                                            <option>Cancelado</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Usuário</label>
+                                    <div id="usuario" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <select class="form-control">
+                                            <option>...</option>
+                                            <option>Chrisan</option>
+                                            <option>Beatriz</option>
+                                            <option>Lucas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label>Setor</label>
+                                    <div id="setor" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                        <select class="form-control">
+                                            <option>...</option>
+                                            <option>Banheiro</option>
+                                            <option>Corredor</option>
+                                            <option>Laboratório</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Patrimônio</label>
+                                    <div id="patrimonio" class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-bank"></i></span>
+                                        <select class="form-control">
+                                            <option>...</option>
+                                            <option>DataShow</option>
+                                            <option>Cadeira</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-search"></i> Buscar</button>
+                <button class="btn bg-navy btn margin pull-right"><i class="fa fa-eraser"></i> Limpar Campos</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Registro</h3>
+                    </div>
+
+
+                    <div class="box-body">
+
+                        <table id="tab_pesquisa_ensalamento" class="table table-bordered table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Código</th>
+                                    <th>Setor</th>
+                                    <th>Usuário(a)</th>
+                                    <th>Patrimônio</th>
+                                    <th>Incidente</th>
+                                    <th>Foto</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>19/02/2018</td>
+                                    <td>1221</td>
+                                    <td>Banheiro</td>
+                                    <td>Maria Dantas</td>
+                                    <td>Data Shown</td>
+                                    <td>Lâmpada Queimada</td>
+                                    <td><img src="~/Arquivos/images/logo/senac-80x80.png" alt="SENAC" height="30" width="30"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-info"><i class="fa fa-eye"></i></button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>20/02/2018</td>
+                                    <td>3223</td>
+                                    <td>Laboratório</td>
+                                    <td>Jorge Oliveira</td>
+                                    <td>Cadeira</td>
+                                    <td>Computador Defeituoso</td>
+                                    <td><img src="~/Arquivos/images/logo/user.jpg" alt="SENAC" height="30" width="30"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-social-icon btn-primary"><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-warning"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="btn btn-social-icon btn-info"><i class="fa fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Código</th>
+                                    <th>Setor</th>
+                                    <th>Usuário(a)</th>
+                                    <th>Patrimônio</th>
+                                    <th>Incidente</th>
+                                    <th>Foto</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

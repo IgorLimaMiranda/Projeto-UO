@@ -1,0 +1,103 @@
+﻿@model Backend.Model.Usuario
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    var mensagem = TempData["Mensagem"] ?? string.Empty;
+    var tipo = TempData["Tipo"] ?? string.Empty;
+    var titulo = TempData["Titulo"] ?? string.Empty;
+}
+
+<script>
+    var tempo = 5;
+    var mudancaReal;
+    var seg;
+
+    function redirecionamento() {
+        if (tempo == 1 || tempo == 0) { seg = "segundo!" } else { seg = "segundos!"}
+        document.getElementById("mensagem").innerHTML = "Voce será redicionado em " + tempo + " " + seg;
+        tempo = tempo - 1;
+        if (tempo == -1) { window.location.assign("/"); tempo = 5; }
+        mudancaReal = setTimeout(function () { redirecionamento() }, 1000);
+    }
+
+    if ('@tipo') {
+        var tipo = '@tipo';
+        if (tipo == 'info') {
+            toastr.@tipo ('</br>@mensagem</br><iframe onload="redirecionamento()" hidden></iframe></br><p id="mensagem"></p>', '@titulo', {
+                "progressBar": true,
+                "closeButton": false,
+                "showMethod": "slideDown",
+                "hideMethod": "slideUp",
+                "timeOut": 5000
+            });
+        }
+        if (tipo == 'error') {
+            toastr.@tipo ('@mensagem', '@titulo', {
+                "progressBar": true,
+                "closeButton": false,
+                "showMethod": "slideDown",
+                "hideMethod": "slideUp",
+                "timeOut": 5000
+            });
+        }
+    }
+</script>
+
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <section class="flexbox-container p-3">
+                <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1 box-shadow-2 p-0">
+                    <div class="card border-grey border-lighten-3 px-0 py-3 m-0">
+                        <div class="card-header no-border">
+                            <div class="card-title text-xs-center">
+                                <div class="p-1"><img src="~/Arquivos/images/logo/Senac.png" alt="Senac Logo"></div>
+                            </div>
+                            <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Recuperação de Senha</span></h6>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                @using(Html.BeginForm("ExibirSenha", "Recuperar", FormMethod.Post)) {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(model => model.Cpf)
+                                    @Html.HiddenFor(model => model.Pergunta)
+                                    <fieldset class="form-group position-relative has-icon-left mb-0">
+                                        @Html.EditorFor(model => model.Pergunta, new {
+                                            htmlAttributes = new {
+                                                @id = "user-pergunta",
+                                                @type = "text",
+                                                @class = "form-control form-control-lg input-lg",
+                                                @placeholder = "Pergunta",
+                                                @disabled = "disabled",
+                                            }
+                                        })
+                                        <div class="form-control-position">
+                                            <i class="icon-help"></i>
+                                        </div>
+                                    </fieldset>
+                                    <br>
+                                    <fieldset class="form-group position-relative has-icon-left">
+                                        @Html.EditorFor(model => model.Resposta, new {
+                                            htmlAttributes = new {
+                                                @id = "user-resposta",
+                                                @type = "password",
+                                                @class = "form-control form-control-lg input-lg",
+                                                @placeholder = "Resposta",
+                                                @required = "required"
+                                            }
+                                        })
+                                        <div class="form-control-position">
+                                            <i class="icon-lock4"></i>
+                                        </div>
+                                    </fieldset>
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i>Recuperar Senha</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

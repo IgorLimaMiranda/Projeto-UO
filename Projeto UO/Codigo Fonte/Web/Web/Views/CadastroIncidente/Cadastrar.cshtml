@@ -1,0 +1,30 @@
+﻿@model Web.ViewModel.CadastroIncidenteVM
+<div class="box box-default">
+    <div class="box-header">
+        <h3 class="box-title">Cadastrar</h3>
+    </div>
+        <div class="box-body">
+            @using (Html.BeginForm("Cadastrar", "CadastroIncidente", FormMethod.Post)) {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            @Html.TextAreaFor(model => model.IncidenteRecorrente.Descricao, new {
+                       @id = "descricao_incidente",
+                       @class = "form-control",
+                       @placeholder = "Descrição do Incidente ...",
+                       @maxlength = "250",
+                       @Required = "required",
+                       @rows = "3"
+                   })
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="button" class="btn bg-navy btn margin pull-right" onclick="LimparPartialView()"><i class="fa fa-close"></i> Cancelar</button>
+                    <button type="submit" class="btn bg-orange btn margin pull-right"><i class="fa fa-check"></i> Salvar</button>
+                </div>
+            }
+        </div>
+    </div>

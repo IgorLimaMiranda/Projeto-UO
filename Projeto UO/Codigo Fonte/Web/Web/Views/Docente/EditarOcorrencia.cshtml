@@ -1,0 +1,118 @@
+﻿@model Web.ViewModel.OcorrenciaVM
+
+@{List<string> Cor = new List<string>();
+    Cor = Model.LabelStatus.ToList();
+    }
+
+<script>
+    function cor() {
+        document.getElementById("").className = ""
+    }
+</script>
+
+<iframe hidden onload="lucasBolivia(); verificarPermissoesDeCampos('@Model.DesabilitarCamposEdicao');"></iframe>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-default">
+
+            <div class="box-header">
+                <h3 class="box-title">Editar</h3>
+            </div>
+            @using(Html.BeginForm("Editar", "Ocorrencia", FormMethod.Post)) {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.DesabilitarCamposEdicao)
+                @Html.HiddenFor(model => model.Chamado.Id)
+                @Html.HiddenFor(model => model.Chamado.HoraData)
+                @Html.HiddenFor(model => model.Chamado.CpfUsuario)
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Patrimônio</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                            @Html.EditorFor(model => model.Chamado.Patrimonio, new {
+                           htmlAttributes = new {
+                               @id = "patrimonio_chamado",
+                               @type = "text",
+                               @class = "form-control",
+                               @placeholder = "...",
+                               @maxlength = "150",
+                               @required = "required"
+                           }, 
+                       })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Incidente</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa  fa-warning"></i></span>
+                            @Html.DropDownListFor(
+                            usuarios => Model.Chamado.IdIncidenteRecorrente, Model.ListarIncidentesRecorrentes(), "...",
+                            htmlAttributes: new {
+                                @id = "combo_box_incidentes",
+                                @class = "form-control",
+                                @required = "required"
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Setor</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa  fa-map-marker"></i></span>
+                            @Html.DropDownListFor(
+                            usuarios => Model.Chamado.IdSetor, Model.ListarSetores(), "...",
+                            htmlAttributes: new {
+                                @id = "combo_box_setores",
+                                @class = "form-control",
+                                @required = "required"
+                            })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <div class="form-group">
+                            @Html.TextAreaFor(model => model.Chamado.Descricao, new {
+                           @id = "descricao_chamado",
+                           @class = "form-control",
+                           @placeholder = "...",
+                           @maxlength = "500",
+                           @required = "required",
+                           @rows = "3"
+                       })
+                        </div>
+                    </div>
+                    <div style="@Html.DisplayFor(m => Model.MenuCadastro)" id="div-status" class="form-group">
+                        <label>Status</label>
+                        <div class="form-group">
+                            @for(int i = 0; i < Model.LabelStatus.Count; i++) {
+                                @Html.RadioButtonFor(model => model.StatusSelecionado, @Model.LabelStatus[i], new {
+                               @id = "rb-" + i,
+                               @class = "radiobtn",
+                               @onclick = "checkStatus()"
+                           })
+                                <big><label class="@Model.LayoutStatus[Model.LabelStatus[i]] lblStatusOcorrencia" for="rb-@i">@Model.LabelStatus[i]</label></big>
+                            }
+                        </div>
+
+                        <div class="form-group" id="comentario" hidden>
+                            <label>Comentário</label>
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.Atendimento.Detalhes, new {
+                                    @id = "comentario_descricao",
+                                    @class = "form-control",
+                                    @placeholder = "...",
+                                    @maxlength = "350",
+                                    @rows = "3",
+                                    @onkeyup = "changeBtnState(this.value)"
+                                })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="button" class="btn bg-navy btn margin pull-right" onclick="LimparPartialView()" id="id_focar"><i class="fa fa-close"></i> Cancelar</button>
+                    <button type="submit" class="btn bg-orange btn margin pull-right" id="btn-salvar"><i class="fa fa-check"></i> Salvar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
